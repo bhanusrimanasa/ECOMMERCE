@@ -1,0 +1,24 @@
+# Root dependencies
+/node_modules
+
+# Subfolder dependencies (Classic Style)
+/backend/node_modules
+/frontend/node_modules
+
+# Config & Secrets
+/backend/config/config.env
+/backend/config/.env
+/backend/.env
+/.env
+
+# Production builds
+/frontend/build
+/frontend/dist
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing
+/frontend/coverage
