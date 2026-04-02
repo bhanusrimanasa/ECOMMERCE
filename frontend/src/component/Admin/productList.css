@@ -1,0 +1,233 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+.adminLayout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #090d16;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #f1f5f9;
+}
+
+.adminContent {
+  padding: 2.5rem 3rem;
+  box-sizing: border-box;
+  flex-grow: 1;
+  max-width: 100%;
+}
+
+/* Header */
+.productListHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.productListHeader h1 {
+  font-size: 1.65rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #f8fafc;
+  margin: 0 0 0.35rem 0;
+}
+
+.subHeading {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.createBtn {
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  color: #ffffff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  padding: 0.65rem 1.25rem;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+}
+
+.createBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+}
+
+/* Table Card Wrapper */
+.tableCardContainer {
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.customDataGrid {
+  border: none !important;
+  color: #cbd5e1 !important;
+  font-family: inherit !important;
+}
+
+/* Grid Header */
+.MuiDataGrid-columnHeaders {
+  background-color: #1a2436 !important;
+  border-bottom: 1px solid #2e3d52 !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  font-weight: 600 !important;
+  font-size: 0.75rem !important;
+  color: #94a3b8 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Rows & Cells */
+.MuiDataGrid-row {
+  border-bottom: 1px solid #1e293b !important;
+  transition: background-color 0.15s ease;
+}
+
+.MuiDataGrid-row:hover {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+}
+
+.MuiDataGrid-cell {
+  border-bottom: none !important;
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  padding: 0 16px !important;
+}
+
+/* Cell Contents */
+.productCell {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.productTableImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  flex-shrink: 0;
+}
+
+.tableCellName {
+  color: #f8fafc;
+  font-weight: 600;
+  transition: color 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.productCell:hover .tableCellName {
+  color: #38bdf8;
+}
+
+.tableCellPrice {
+  color: #38bdf8;
+  font-weight: 700;
+}
+
+/* Status Badges */
+.stockBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.badgeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.stockBadge.inStock {
+  background-color: rgba(16, 185, 129, 0.08);
+  color: #34d399;
+  border: 1px solid rgba(52, 211, 153, 0.2);
+}
+
+.stockBadge.inStock .badgeDot {
+  background-color: #34d399;
+  box-shadow: 0 0 6px rgba(52, 211, 153, 0.6);
+}
+
+.stockBadge.outOfStock {
+  background-color: rgba(239, 68, 68, 0.08);
+  color: #f87171;
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.stockBadge.outOfStock .badgeDot {
+  background-color: #f87171;
+  box-shadow: 0 0 6px rgba(248, 113, 113, 0.6);
+}
+
+/* Actions */
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.actionBtn.edit {
+  background-color: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.2);
+}
+
+.actionBtn.edit:hover {
+  background-color: #38bdf8;
+  color: #0f172a;
+}
+
+.actionBtn.delete {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.actionBtn.delete:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+/* DataGrid Footer & Pagination */
+.MuiDataGrid-footerContainer {
+  background-color: #0f172a !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+.MuiTablePagination-root,
+.MuiIconButton-root {
+  color: #94a3b8 !important;
+}
