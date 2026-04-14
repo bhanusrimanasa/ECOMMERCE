@@ -1,0 +1,171 @@
+.newProductContainer {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #f4f6f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.createProductForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 480px;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.createProductForm > h1 {
+  color: #1e293b;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 0.5rem 0;
+}
+
+.inputField {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inputField > svg {
+  position: absolute;
+  left: 12px;
+  font-size: 1.25rem;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.inputField > input,
+.inputField > select,
+.inputField > textarea {
+  padding: 0.75rem 0.75rem 0.75rem 2.6rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  outline: none;
+  background-color: #f8fafc;
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.inputField > textarea {
+  resize: vertical;
+}
+
+.inputField > input:focus,
+.inputField > select:focus,
+.inputField > textarea:focus {
+  border-color: #2563eb;
+  background-color: #ffffff;
+}
+
+/* Custom Upload Bar */
+.customUploadArea {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uploadBtn {
+  width: 100%;
+  text-align: center;
+  background-color: #f1f5f9;
+  border: 1px dashed #94a3b8;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.uploadBtn:hover {
+  background-color: #e2e8f0;
+  border-color: #64748b;
+}
+
+/* Dynamic Image Grid */
+#createProductFormImage {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 0.6rem;
+  max-height: 160px;
+  overflow-y: auto;
+  padding: 0.2rem;
+}
+
+.imageCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.imageCard > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.removeImgBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(15, 23, 42, 0.75);
+  color: #ffffff;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.removeImgBtn:hover {
+  background-color: #ef4444;
+}
+
+#createProductBtn {
+  border: none;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  width: 100%;
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 8px;
+}
+
+#createProductBtn:hover {
+  background-color: #1d4ed8;
+}
+
+#createProductBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media screen and (max-width: 600px) {
+  .createProductForm {
+    padding: 1.5rem;
+  }
+}
