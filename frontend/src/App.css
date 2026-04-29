@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  cursor: url("./images/cursor.png"), auto;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.greenColor {
+  color: green !important;
+}
+.redColor {
+  color: red !important;
+}
+.nav-link {
+  z-index: 20 !important;
+  cursor: pointer !important;
+}
+#container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure the navbar doesn't stay open after a click */
+.overlay-navbar {
+  pointer-events: none; /* Allows clicks to pass through if it's "invisible" */
+}
+.overlay-navbar.active {
+  pointer-events: auto; /* Re-enables clicks when you actually want to use the menu */
+}

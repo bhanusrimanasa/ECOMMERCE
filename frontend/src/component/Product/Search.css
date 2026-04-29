@@ -1,0 +1,118 @@
+.searchContainer {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(231, 231, 231);
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.searchBox {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 🌟 CRUCIAL: Keeps the dropdown list perfectly aligned under the text box */
+.inputWrapper {
+  position: relative;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Updated selectors to look inside the wrapper instead of direct children */
+.searchBox .inputWrapper > input[type="text"] {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.274);
+  background-color: white;
+  border: none;
+  color: rgba(0, 0, 0, 0.637);
+  padding: 1vmax 2vmax;
+  width: 100%; /* Spans full width of the wrapper parent */
+  outline: none;
+  border-radius: 0%;
+  font: 300 1.1vmax cursive;
+  box-sizing: border-box;
+  height: 50px; /* Fixed cross-browser height */
+}
+
+.searchBox > input[type="submit"] {
+  height: 50px; /* Aligns height perfectly with the input field */
+  border-radius: 0%;
+  background-color: tomato;
+  border: none;
+  padding: 1vmax;
+  width: 10%;
+  font: 300 1.1vmax "Roboto";
+  cursor: pointer;
+  color: white;
+  transition: all 0.5s;
+}
+
+.searchBox > input[type="submit"]:hover {
+  background-color: rgb(55, 97, 214);
+}
+
+/* 🌟 GOOGLE STYLE FLOATING SUGGESTIONS LIST */
+.suggestionList {
+  position: absolute;
+  top: 52px; /* Floats exactly below the 50px input field */
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.suggestionList > li {
+  padding: 12px 20px;
+  font: 300 1vmax "Roboto";
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s;
+}
+
+.suggestionList > li:hover {
+  background-color: #f1f1f1;
+  color: tomato;
+}
+
+/* 📱 RESPONSIVE LAYOUT MOBILE MEDIA QUERY */
+@media screen and (max-width: 600px) {
+  .inputWrapper {
+    width: 65%; /* Allocates more room on small screen widths */
+  }
+
+  .searchBox .inputWrapper > input[type="text"] {
+    font: 300 4vw cursive;
+    height: 45px;
+  }
+
+  .searchBox > input[type="submit"] {
+    height: 45px;
+    width: 25%;
+    font: 300 4vw "Roboto";
+  }
+  
+  .suggestionList {
+    top: 47px;
+  }
+  
+  .suggestionList > li {
+    padding: 10px 15px;
+    font: 300 3.5vw "Roboto";
+  }
+}

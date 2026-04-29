@@ -1,0 +1,84 @@
+.CartItemCard {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* Extra Large Product Image Box */
+.CartItemCard > img {
+  width: 160px;            /* Expanded to 160px */
+  height: 160px;
+  min-width: 160px;
+  min-height: 160px;
+  object-fit: cover;       /* Fills the entire frame */
+  background-color: #0f172a;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  box-sizing: border-box;
+}
+
+/* Product Info Container */
+.CartItemCard > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Product Title Link */
+.CartItemCard > div > a {
+  color: #f8fafc !important;
+  font-size: 1.45rem;       /* Slightly larger text */
+  font-weight: 700;
+  text-decoration: none;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.CartItemCard > div > a:hover {
+  color: #f59e0b !important;
+}
+
+/* Product Price Text */
+.CartItemCard > div > span {
+  color: #cbd5e1 !important;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+/* Remove Button */
+.CartItemCard > div > p {
+  color: #ef4444 !important;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 0;
+  width: max-content;
+  transition: opacity 0.2s ease;
+}
+
+.CartItemCard > div > p:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 600px) {
+  .CartItemCard {
+    gap: 1.25rem;
+  }
+
+  .CartItemCard > img {
+    width: 110px;
+    height: 110px;
+    min-width: 110px;
+    min-height: 110px;
+  }
+
+  .CartItemCard > div > a {
+    font-size: 1.2rem;
+  }
+
+  .CartItemCard > div > span {
+    font-size: 1.05rem;
+  }
+}

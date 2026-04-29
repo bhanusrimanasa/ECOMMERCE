@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+.paymentWrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0b0f19;
+  padding: 3rem 2rem 5rem;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.paymentContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.paymentForm {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  width: 460px;
+  max-width: 100%;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-sizing: border-box;
+}
+
+.paymentHeading {
+  color: #f8fafc;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid #334155;
+  text-align: center;
+}
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.inputRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.paymentInput {
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  background-color: #0f172a;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.paymentInput--focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.inputGroup > svg {
+  position: absolute;
+  left: 0.9rem;
+  font-size: 1.3rem !important;
+  color: #64748b;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.paymentFormBtn {
+  border: none;
+  background-color: #f59e0b;
+  color: #0f172a;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 10px;
+  outline: none;
+  margin-top: 0.8rem;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+}
+
+.paymentFormBtn:hover:not(:disabled) {
+  background-color: #d97706;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+
+.paymentFormBtn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.paymentFormBtn:disabled {
+  background-color: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 640px) {
+  .paymentWrapper {
+    padding: 1.5rem 1rem;
+  }
+
+  .paymentForm {
+    padding: 1.5rem;
+  }
+
+  .inputRow {
+    grid-template-columns: 1fr;
+  }
+}

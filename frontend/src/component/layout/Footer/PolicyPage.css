@@ -1,0 +1,128 @@
+.policyPageContainer {
+  width: 100vw;
+  min-height: 80vh;
+  max-width: 100%;
+  background-color: #f3f3f3;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 50px 20px;
+  box-sizing: border-box;
+}
+
+.policyPageBox {
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  font-family: "Roboto", sans-serif;
+}
+
+.policyPageBox h1 {
+  font-size: 26px;
+  color: #232f3e;
+  margin-bottom: 12px;
+}
+
+.policyDivider {
+  width: 50px;
+  height: 4px;
+  background-color: #ff9900;
+  margin-bottom: 25px;
+}
+
+.policyPageBox p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #333333;
+  margin-bottom: 18px;
+  white-space: pre-line;
+}
+/* AI Chat Panel Wrapper styling constraints */
+.aiChatContainer {
+  margin-top: 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fdfdfd;
+  overflow: hidden;
+}
+
+.aiChatContainer h3 {
+  background-color: #232f3e;
+  color: white;
+  margin: 0;
+  padding: 15px;
+  font-size: 16px;
+}
+
+.chatWindow {
+  height: 300px;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: #f9f9f9;
+}
+
+.chatMessage {
+  display: flex;
+  max-width: 75%;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.chatMessage.bot {
+  background-color: #eaeded;
+  color: #333;
+  align-self: flex-start;
+  border-top-left-radius: 2px;
+}
+
+.chatMessage.user {
+  background-color: #ff9900;
+  color: white;
+  align-self: flex-end;
+  border-top-right-radius: 2px;
+}
+
+.chatMessage.typing {
+  font-style: italic;
+  color: #777;
+}
+
+.chatInputForm {
+  display: flex;
+  border-top: 1px solid #ddd;
+}
+
+.chatInputForm input {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.chatInputForm button {
+  background-color: #ff9900;
+  color: white;
+  border: none;
+  padding: 0 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.chatInputForm button:hover {
+  background-color: #df8500;
+}
+
+.chatInputForm button:disabled, .chatInputForm input:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

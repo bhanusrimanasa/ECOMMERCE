@@ -1,0 +1,235 @@
+/* Page Wrapper */
+.cartPage {
+  background-color: #0f172a;
+  min-height: 90vh;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+.cartWrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Empty Cart Container */
+.emptyCart {
+  background-color: #0f172a;
+  min-height: 75vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.emptyCartIcon {
+  font-size: 5.5rem !important;
+  color: #f59e0b !important;
+}
+
+.emptyCartText {
+  color: #f8fafc !important;
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+}
+
+.emptyCartBtn {
+  background-color: #f59e0b;
+  color: #0f172a;
+  border: none;
+  padding: 0.9rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+}
+
+.emptyCartBtn:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+}
+
+/* Table Header */
+.cartHeader {
+  background-color: #1e293b;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 3fr 1.2fr 1fr;
+  padding: 1.25rem 2rem;
+  border-radius: 12px 12px 0 0;
+  border: 1px solid #334155;
+  border-bottom: none;
+}
+
+.cartHeader > p {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #cbd5e1; /* High contrast light text */
+}
+
+.cartHeader > p:last-child {
+  text-align: right;
+}
+
+/* Cart Product Rows */
+.cartContainer {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 3fr 1.2fr 1fr;
+  align-items: center;
+  padding: 1.75rem 2rem;
+  box-sizing: border-box;
+  border: 1px solid #334155;
+  border-top: 1px solid #1e293b;
+  background-color: #1e293b;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+/* Quantity Control Buttons & Inputs */
+.cartInput {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  background-color: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  width: max-content;
+  overflow: hidden;
+}
+
+.cartInput > button {
+  border: none;
+  background-color: transparent;
+  padding: 0 1.2rem;
+  cursor: pointer;
+  color: #f8fafc;
+  font-size: 1.4rem;
+  font-weight: 700;
+  height: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.cartInput > button:hover {
+  background-color: #334155;
+}
+
+.cartInput > input {
+  border: none;
+  background-color: transparent;
+  width: 50px;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  outline: none;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #f8fafc;
+}
+
+/* Hide HTML5 Number Arrows */
+.cartInput > input::-webkit-outer-spin-button,
+.cartInput > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Subtotal Field */
+.cartSubtotal {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #f59e0b; /* Vibrant amber */
+  margin: 0;
+}
+
+/* Profit & Checkout Block */
+.cartGrossProfit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 2rem;
+  gap: 1.5rem;
+}
+
+.cartGrossProfitBox {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 420px;
+  border-top: 2px solid #f59e0b;
+  padding-top: 1.5rem;
+}
+
+.cartGrossProfitBox > p {
+  color: #f8fafc;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.cartGrossProfitBox > p:last-child {
+  color: #f59e0b;
+  font-weight: 800;
+}
+
+.checkOutBtn {
+  width: 100%;
+  max-width: 420px;
+}
+
+.checkOutBtn > button {
+  width: 100%;
+  background-color: #f59e0b;
+  color: #0f172a;
+  border: none;
+  padding: 1.1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.25);
+}
+
+.checkOutBtn > button:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(245, 158, 11, 0.4);
+}
+
+/* Mobile Overrides */
+@media screen and (max-width: 768px) {
+  .cartPage {
+    padding: 1rem;
+  }
+
+  .cartHeader {
+    display: none;
+  }
+
+  .cartContainer {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.25rem;
+  }
+
+  .cartSubtotal {
+    justify-content: flex-start;
+  }
+
+  .cartGrossProfitBox,
+  .checkOutBtn {
+    max-width: 100%;
+  }
+}

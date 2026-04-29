@@ -1,0 +1,81 @@
+.contactContainer {
+  background-color: #f1f1f1;
+  height: 100vh;
+  width: 100vw;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactBox {
+  background-color: white;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  max-width: 500px;
+  width: 90%;
+}
+
+.contactBox h1 {
+  font: 400 2.5vmax "Roboto";
+  color: #232f3e;
+  margin-bottom: 10px;
+}
+
+.contactDivider {
+  width: 80px;
+  height: 4px;
+  background-color: #ff9900;
+  margin: 0 auto 25px auto;
+  border-radius: 2px;
+}
+
+.contactBox p {
+  font: 300 1.1vmax "Roboto";
+  color: #555;
+  margin: 8px 0;
+}
+
+.contactDetails {
+  margin: 30px 0;
+  text-align: left;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 6px;
+  border-left: 4px solid #ff9900;
+}
+
+.detailItem {
+  font: 400 1vmax "Roboto";
+  color: #333;
+  margin: 12px 0;
+}
+
+.mailBtn {
+  text-decoration: none;
+}
+
+.mailBtn button {
+  background-color: #ff9900 !important;
+  color: white !important;
+  font: 500 1vmax "Roboto" !important;
+  padding: 12px 25px !important;
+  border-radius: 4px !important;
+  transition: all 0.3s ease;
+}
+
+.mailBtn button:hover {
+  background-color: #df8500 !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media screen and (max-width: 600px) {
+  .contactBox h1 {
+    font-size: 4vmax;
+  }
+  .contactBox p, .detailItem, .mailBtn button {
+    font-size: 1.8vmax !important;
+  }
+}

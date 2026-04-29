@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.orderDetailsPage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #0b0f19;
+  padding: 6rem 1.5rem 4rem 1.5rem;
+  box-sizing: border-box;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #e2e8f0;
+}
+
+.orderDetailsWrapper {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.backLink {
+  display: inline-block;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+  transition: color 0.15s ease;
+}
+
+.backLink:hover {
+  color: #38bdf8;
+}
+
+/* Main Container Card */
+.orderCard {
+  background-color: #151d2a;
+  border: 1px solid #263346;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Card Header */
+.cardHeader {
+  background-color: #1e293b;
+  padding: 1.25rem 1.75rem;
+  border-bottom: 1px solid #263346;
+}
+
+.headerMeta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.metaLabel {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #64748b;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.2rem;
+}
+
+.orderIdText {
+  font-family: monospace;
+  font-size: 0.95rem;
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.statusPill {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.statusPill.paid {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.statusPill.unpaid {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Status Tracker Progress Bar */
+.trackerSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: #101725;
+  border-bottom: 1px solid #263346;
+}
+
+.trackerStep {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.trackerStep.active {
+  color: #38bdf8;
+}
+
+.stepDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #334155;
+}
+
+.trackerStep.active .stepDot {
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.5);
+}
+
+.trackerLine {
+  height: 2px;
+  width: 80px;
+  background-color: #334155;
+  margin: 0 1rem;
+}
+
+.trackerLine.active {
+  background-color: #38bdf8;
+}
+
+/* Section: Items */
+.sectionBlock {
+  padding: 1.75rem;
+  border-bottom: 1px solid #263346;
+}
+
+.sectionTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0 0 1.25rem 0;
+}
+
+.itemsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.itemRow {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.itemImg {
+  width: 4rem;
+  height: 4rem;
+  object-fit: cover;
+  border-radius: 10px;
+  background-color: #0b0f19;
+  border: 1px solid #263346;
+  flex-shrink: 0;
+}
+
+.itemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.itemName {
+  color: #f1f5f9;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.itemName:hover {
+  color: #38bdf8;
+}
+
+.itemQty {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.itemPrice {
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Footer Grid: Delivery & Payment Summary */
+.cardFooterGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: #101725;
+}
+
+.footerBox {
+  padding: 1.75rem;
+}
+
+.footerBox:first-child {
+  border-right: 1px solid #263346;
+}
+
+.footerBox h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8fafc;
+  margin: 0 0 1rem 0;
+}
+
+.recipientName {
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0 0 0.25rem 0;
+  font-size: 0.9rem;
+}
+
+.addressText, .phoneText {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  margin: 0 0 0.25rem 0;
+}
+
+/* Payment Summary Rows */
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-bottom: 0.5rem;
+}
+
+.summaryRow.totalRow {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #263346;
+  color: #f8fafc;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 640px) {
+  .cardFooterGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .footerBox:first-child {
+    border-right: none;
+    border-bottom: 1px solid #263346;
+  }
+
+  .trackerLine {
+    width: 40px;
+    margin: 0 0.5rem;
+  }
+}

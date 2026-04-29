@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+.orderSuccessWrapper {
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  background-color: #0b0f19;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.orderSuccessCard {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  width: 520px;
+  max-width: 90%;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.iconContainer {
+  background-color: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.iconContainer > svg {
+  font-size: 4.5rem !important;
+  color: #10b981;
+}
+
+.orderSuccessCard > h2 {
+  color: #f8fafc;
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 0.8rem 0;
+  letter-spacing: 0.02em;
+}
+
+.orderSuccessCard > p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 2rem 0;
+  max-width: 400px;
+}
+
+.actionButtons {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.viewOrdersBtn {
+  background-color: #f59e0b;
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 700;
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+}
+
+.viewOrdersBtn:hover {
+  background-color: #d97706;
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+  transform: translateY(-1px);
+}
+
+.continueBtn {
+  background-color: #0f172a;
+  color: #f8fafc;
+  border: 1px solid #334155;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.85rem 1.8rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.continueBtn:hover {
+  background-color: #1e293b;
+  border-color: #475569;
+}
+
+@media screen and (max-width: 600px) {
+  .orderSuccessCard {
+    padding: 2rem 1.25rem;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .viewOrdersBtn,
+  .continueBtn {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+  }
+}

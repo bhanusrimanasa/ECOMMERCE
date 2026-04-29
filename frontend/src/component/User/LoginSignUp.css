@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+.LoginSignUpContainer {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0f19;
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.LoginSignUpBox {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  width: 420px;
+  max-width: 90%;
+  height: 520px;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+.login_signUp_toggle {
+  display: flex;
+  height: 3.2rem;
+  background-color: #0f172a;
+  border-bottom: 1px solid #334155;
+}
+
+.login_signUp_toggle > p {
+  color: #94a3b8;
+  font: 600 0.9rem 'Roboto', sans-serif;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  margin: 0;
+}
+
+.login_signUp_toggle > p:hover {
+  color: #f8fafc;
+}
+
+.switcherBtn {
+  background-color: #f59e0b !important;
+  height: 3px;
+  width: 50%;
+  border: none;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.loginForm,
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 2.2rem;
+  gap: 1.2rem;
+  height: calc(100% - 3.2rem);
+  box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.signUpForm {
+  transform: translateY(-100%) translateX(-100%);
+}
+
+.inputGroup {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.inputGroup > input {
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.inputGroup > input::placeholder {
+  color: #64748b;
+}
+
+.inputGroup > input:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.inputGroup > svg {
+  position: absolute;
+  left: 0.8rem;
+  font-size: 1.3rem !important;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.forgotPasswordLink {
+  color: #f59e0b;
+  text-decoration: none;
+  align-self: flex-end;
+  transition: opacity 0.2s ease;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.forgotPasswordLink:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+#registerImage {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+#registerImage > img {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #334155;
+}
+
+#registerImage > input {
+  display: flex;
+  width: 100%;
+}
+
+#registerImage > input::file-selector-button {
+  cursor: pointer;
+  width: 100%;
+  height: 2.5rem;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0 1rem;
+  color: #cbd5e1;
+  background-color: #0f172a;
+}
+
+#registerImage > input::file-selector-button:hover {
+  background-color: #1e293b;
+  border-color: #f59e0b;
+  color: #f8fafc;
+}
+
+.submitBtn {
+  border: none;
+  background-color: #f59e0b;
+  color: #0f172a;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  border-radius: 8px;
+  outline: none;
+  margin-top: auto;
+}
+
+.submitBtn:hover {
+  background-color: #d97706;
+}
+
+.submitBtn:active {
+  transform: scale(0.99);
+}
+
+/* Animations */
+.shiftToLeft {
+  transform: translateX(-100%);
+}
+.shiftToNeutral {
+  transform: translateX(0%);
+}
+
+.shiftToNeutralForm {
+  transform: translateX(0%) translateY(-100%);
+}
+
+.shiftToRight {
+  transform: translateX(100%);
+}
+
+@media screen and (max-width: 600px) {
+  .LoginSignUpBox {
+    width: 92vw;
+    height: 520px;
+  }
+}

@@ -1,0 +1,112 @@
+/* Base Page Styling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0b0f19; /* Deep dark background */
+  color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+}
+
+/* Rich Dark Hero Section */
+.hero {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 6rem 2rem;
+  background: linear-gradient(180deg, #1e293b 0%, #0b0f19 100%);
+  border-bottom: 1px solid #1e293b;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: #ffffff;
+  margin: 0 0 1.5rem 0;
+  max-width: 700px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #94a3b8;
+  margin: 0 0 2.5rem 0;
+  font-weight: 400;
+}
+
+.heroBtn {
+  display: inline-block;
+  padding: 0.9rem 2.2rem;
+  background-color: #f59e0b; /* Amber/Orange Accent */
+  color: #0f172a;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(245, 158, 11, 0.3);
+  transition: all 0.2s ease;
+}
+
+.heroBtn:hover {
+  background-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(245, 158, 11, 0.45);
+}
+
+/* Main Content Area */
+.mainContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 5rem 2rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3rem;
+  letter-spacing: -0.02em;
+  position: relative;
+  display: inline-block;
+}
+
+.sectionHeader h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background-color: #f59e0b;
+  border-radius: 2px;
+}
+
+/* Product Cards Grid */
+.container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2.5rem 1.8rem;
+}
+
+/* Responsive Scaling */
+@media screen and (max-width: 768px) {
+  .hero {
+    padding: 4rem 1.5rem;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+  .mainContent {
+    padding: 3rem 1.5rem;
+  }
+  .container {
+    gap: 1.5rem 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}

@@ -1,0 +1,321 @@
+/* Page Wrapper */
+.productDetailsContainer {
+  background-color: #0b0f19;
+  min-height: 100vh;
+  padding: 3rem 1.5rem;
+  box-sizing: border-box;
+}
+
+/* Two-Column Product Details Layout */
+.ProductDetails {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Carousel Container & Images */
+.carouselWrapper {
+  width: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #0f172a;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.CarouselImage {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  margin: 0 auto;
+  display: block;
+}
+
+/* Right Details Column */
+.productInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Product Title & ID */
+.detailsBlock-1 > h2 {
+  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0 0 0.4rem 0;
+  line-height: 1.25;
+}
+
+.detailsBlock-1 > p {
+  color: #64748b;
+  font-size: 0.85rem;
+  margin: 0;
+  font-family: monospace;
+}
+
+/* Ratings Strip */
+.detailsBlock-2 {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-top: 1px solid #334155;
+  border-bottom: 1px solid #334155;
+  padding: 1rem 0;
+}
+
+.detailsBlock-2-span {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* Price & Cart Actions */
+.detailsBlock-3 > h1 {
+  color: #f59e0b;
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0 0 1.25rem 0;
+}
+
+.detailsBlock-3-1 {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Quantity Selector Box */
+.detailsBlock-3-1-1 {
+  display: flex;
+  align-items: center;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.detailsBlock-3-1-1 > button {
+  border: none;
+  background-color: transparent;
+  padding: 0.6rem 1.2rem;
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: background-color 0.2s ease;
+}
+
+.detailsBlock-3-1-1 > button:hover {
+  background-color: #334155;
+}
+
+.detailsBlock-3-1-1 > input {
+  border: none;
+  background-color: transparent;
+  width: 45px;
+  text-align: center;
+  outline: none;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Hide HTML5 Input Arrows */
+.detailsBlock-3-1-1 > input::-webkit-outer-spin-button,
+.detailsBlock-3-1-1 > input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Add to Cart Button */
+.addToCartBtn {
+  border: none;
+  cursor: pointer;
+  color: #0f172a;
+  background-color: #f59e0b;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+}
+
+.addToCartBtn:hover:not(:disabled) {
+  background-color: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.35);
+}
+
+.addToCartBtn:disabled {
+  background-color: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Stock Status */
+.stockStatus {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.greenColor {
+  color: #22c55e;
+}
+
+.redColor {
+  color: #ef4444;
+}
+
+/* Description Block */
+.detailsBlock-4 h3 {
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+}
+
+.detailsBlock-4 p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Submit Review Button */
+.submitReview {
+  border: 1px solid #f59e0b;
+  background-color: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.75rem 1.75rem;
+  color: #f59e0b;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+.submitReview:hover {
+  background-color: #f59e0b;
+  color: #0f172a;
+}
+
+/* Review Dialog Modal */
+.submitDialog {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding-top: 0.5rem !important;
+}
+
+.submitDialogTextArea {
+  border: 1px solid #334155;
+  background-color: #0f172a;
+  color: #ffffff;
+  border-radius: 8px;
+  outline: none;
+  padding: 1rem;
+  font-size: 0.95rem;
+  resize: vertical;
+}
+
+.submitDialogTextArea:focus {
+  border-color: #f59e0b;
+}
+
+/* Reviews List Section */
+.reviewsSection {
+  max-width: 1200px;
+  margin: 4rem auto 0 auto;
+}
+
+.reviewsHeading {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+
+.reviewsHeading::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 3px;
+  background-color: #f59e0b;
+  border-radius: 2px;
+}
+
+.reviews {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scroll-behavior: smooth;
+}
+
+/* Custom Scrollbar for Reviews Horizontal List */
+.reviews::-webkit-scrollbar {
+  height: 6px;
+}
+
+.reviews::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 4px;
+}
+
+.reviews::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+.noReviews {
+  font-size: 1.05rem;
+  text-align: center;
+  color: #64748b;
+  margin: 2rem 0;
+}
+
+/* Mobile & Tablet Responsiveness */
+@media screen and (max-width: 900px) {
+  .ProductDetails {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .detailsBlock-1 > h2 {
+    font-size: 1.75rem;
+  }
+
+  .detailsBlock-3-1 {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .detailsBlock-3-1-1 {
+    justify-content: center;
+  }
+
+  .addToCartBtn,
+  .submitReview {
+    width: 100%;
+  }
+}

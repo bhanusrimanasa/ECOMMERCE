@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+.shippingContainer {
+  width: 100vw;
+  max-width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  background-color: #0b0f19;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.shippingBox {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  width: 460px;
+  max-width: 90%;
+  margin-top: 2rem;
+  box-sizing: border-box;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.45);
+}
+
+.shippingHeading {
+  text-align: center;
+  color: #f8fafc;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid #334155;
+  margin: 0;
+  background-color: #0f172a;
+}
+
+.shippingForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  gap: 1.2rem;
+  box-sizing: border-box;
+}
+
+.shippingForm > .inputGroup {
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.shippingForm > .inputGroup > input,
+.shippingForm > .inputGroup > select {
+  padding: 0.85rem 1rem 0.85rem 2.8rem;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+}
+
+.shippingForm > .inputGroup > select option {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+.shippingForm > .inputGroup > input::placeholder {
+  color: #64748b;
+}
+
+.shippingForm > .inputGroup > input:focus,
+.shippingForm > .inputGroup > select:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+}
+
+.shippingForm > .inputGroup > svg {
+  position: absolute;
+  left: 0.8rem;
+  font-size: 1.3rem !important;
+  color: #64748b;
+  pointer-events: none;
+}
+
+.shippingBtn {
+  border: none;
+  background-color: #f59e0b;
+  color: #0f172a;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  width: 100%;
+  padding: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease, opacity 0.2s ease;
+  border-radius: 8px;
+  outline: none;
+  margin-top: 0.5rem;
+}
+
+.shippingBtn:hover:not(:disabled) {
+  background-color: #d97706;
+}
+
+.shippingBtn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.shippingBtn:disabled {
+  background-color: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@media screen and (max-width: 600px) {
+  .shippingContainer {
+    padding: 1rem 0.5rem;
+  }
+
+  .shippingBox {
+    width: 95vw;
+    margin-top: 1rem;
+  }
+
+  .shippingForm {
+    padding: 1.2rem;
+  }
+}

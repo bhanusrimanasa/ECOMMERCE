@@ -1,0 +1,313 @@
+/* Import Roboto Font explicitly */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
+/* Container Wrapper */
+.productsPageWrapper {
+  background-color: #0b0f19;
+  min-height: 90vh;
+  padding: 2.5rem 1.5rem;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif !important;
+}
+
+/* Page Heading */
+.productsHeading {
+  margin: 0 auto 2.5rem auto;
+  width: max-content;
+  border-bottom: 3px solid #f59e0b;
+  padding-bottom: 0.5rem;
+  color: #fbfbfb !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 2.2rem !important;
+  font-weight: 700 !important;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* Page Layout */
+.productsPage {
+  display: flex;
+  max-width: 1300px;
+  margin: 0 auto;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+/* Sidebar Filter Panel */
+.filterBox {
+  flex: 0 0 290px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  position: sticky;
+  top: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+/* Completely remove borders and padding from fieldset if used */
+.filterBox fieldset {
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  min-width: 0 !important;
+}
+
+.filterHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.85rem;
+}
+
+/* High Specificity for Material-UI Typography Headings */
+.filterBox .filterTitle,
+.filterBox p.filterTitle,
+.filterBox span.filterTitle {
+  color: #f0f1f3 !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.03em !important;
+  margin: 0 !important;
+}
+
+.clearFiltersBtn {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.clearFiltersBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* High Specificity for Filter Subheadings */
+.filterBox .filterSubHeading,
+.filterBox p.filterSubHeading,
+.filterBox span.filterSubHeading,
+.filterBox legend.filterSubHeading {
+  color: #cbd5e1 !important;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.95rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  margin: 0 !important;
+  border: none !important;
+  padding: 0 !important;
+}
+
+/* Styled Material-UI Sliders */
+.customSlider {
+  color: #f59e0b !important;
+  padding: 10px 0 !important;
+}
+
+.customSlider .MuiSlider-rail {
+  background-color: #334155 !important;
+  opacity: 1 !important;
+  height: 6px !important;
+  border-radius: 4px;
+}
+
+.customSlider .MuiSlider-track {
+  height: 6px !important;
+  border-radius: 4px;
+}
+
+.customSlider .MuiSlider-thumb {
+  width: 18px !important;
+  height: 18px !important;
+  background-color: #f59e0b !important;
+  border: 3px solid #0f172a !important;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+}
+
+.priceLabels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.priceBadge {
+  background-color: #0f172a;
+  color: #f59e0b;
+  border: 1px solid #334155;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Category Pills Grid */
+.categoryBox {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.category-link {
+  color: #94a3b8;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.45rem 0.85rem;
+  border-radius: 20px;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  transition: all 0.2s ease;
+}
+
+.category-link:hover {
+  color: #f8fafc;
+  border-color: #f59e0b;
+  transform: translateY(-1px);
+}
+
+.activeCategory {
+  color: #0f172a !important;
+  background-color: #f59e0b !important;
+  border-color: #f59e0b !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+}
+
+/* Products Grid */
+.products {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  min-height: 400px;
+}
+
+.noProductsBox {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem 2rem;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.noProductsText {
+  color: #cbd5e1;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.clearFiltersBtnLarge {
+  background-color: #f59e0b;
+  color: #0f172a;
+  border: none;
+  padding: 0.75rem 1.75rem;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clearFiltersBtnLarge:hover {
+  background-color: #d97706;
+}
+
+/* Pagination Section */
+.paginationBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  margin: 0;
+  gap: 0.25rem;
+}
+
+.page-item {
+  background-color: #1e293b;
+  list-style: none;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.page-link {
+  display: block;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  font-family: 'Roboto', sans-serif !important;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.page-item:hover {
+  border-color: #f59e0b;
+  background-color: #334155;
+}
+
+.page-item:hover .page-link {
+  color: #f8fafc;
+}
+
+.pageItemActive {
+  background-color: #f59e0b !important;
+  border-color: #f59e0b !important;
+}
+
+.pageLinkActive {
+  color: #0f172a !important;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 900px) {
+  .productsPage {
+    flex-direction: column;
+  }
+
+  .filterBox {
+    width: 100%;
+    position: static;
+  }
+
+  .products {
+    width: 100%;
+  }
+}
