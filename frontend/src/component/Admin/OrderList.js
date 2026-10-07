@@ -22,10 +22,14 @@ const OrderList = () => {
   const navigate = useNavigate();
 
   const { error, orders } = useSelector((state) => state.allOrders);
-  const { error: deleteError, isDeleted } = useSelector((state) => state.order);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.order
+  );
 
   const deleteOrderHandler = (id) => {
-    dispatch(deleteOrder(id));
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      dispatch(deleteOrder(id));
+    }
   };
 
   useEffect(() => {
@@ -41,12 +45,12 @@ const OrderList = () => {
 
     if (isDeleted) {
       alert.success("Order Deleted Successfully");
-      navigate("/admin/orders");
       dispatch({ type: DELETE_ORDER_RESET });
+      dispatch(getAllOrders());
+    } else {
+      dispatch(getAllOrders());
     }
-
-    dispatch(getAllOrders());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
+  }, [dispatch, alert, error, deleteError, isDeleted]);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 200, flex: 0.8 },
@@ -104,20 +108,19 @@ const OrderList = () => {
 
   const rows = [];
 
-  orders &&
-    orders.forEach((item) => {
-      rows.push({
-        id: item._id,
-        itemsQty: item.orderItems ? item.orderItems.length : 0,
-        amount: `₹${item.totalPrice}`,
-        status: item.orderStatus,
-        agentStatus: item.deliveryStatus || "Not Assigned",
-      });
+  orders?.forEach((item) => {
+    rows.push({
+      id: item._id,
+      itemsQty: item.orderItems ? item.orderItems.length : 0,
+      amount: `₹${item.totalPrice?.toLocaleString()}`,
+      status: item.orderStatus,
+      agentStatus: item.deliveryStatus || "Not Assigned",
     });
+  });
 
   return (
     <Fragment>
-      <MetaData title={`ALL ORDERS - Admin`} />
+      <MetaData title="ALL ORDERS - Admin" />
 
       <div className="dashboard">
         <SideBar />

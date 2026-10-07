@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
-import Sidebar from "./Sidebar.js";
+import Sidebar from "./Sidebar";
 import "./dashboard.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { getAdminProduct } from "../../actions/productAction";
-import { getAllOrders } from "../../actions/orderAction.js";
-import { getAllUsers } from "../../actions/userAction.js";
+import { getAllOrders } from "../../actions/orderAction";
+import { getAllUsers } from "../../actions/userAction";
 import MetaData from "../layout/MetaData";
 
-// Import Chart.js essentials to avoid rendering errors
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -41,12 +40,11 @@ const Dashboard = () => {
   const { users } = useSelector((state) => state.allUsers);
 
   let outOfStock = 0;
-  products &&
-    products.forEach((item) => {
-      if (item.Stock === 0) {
-        outOfStock += 1;
-      }
-    });
+  products?.forEach((item) => {
+    if (item.Stock === 0) {
+      outOfStock += 1;
+    }
+  });
 
   useEffect(() => {
     dispatch(getAdminProduct());
@@ -55,10 +53,9 @@ const Dashboard = () => {
   }, [dispatch]);
 
   let totalAmount = 0;
-  orders &&
-    orders.forEach((item) => {
-      totalAmount += item.totalPrice;
-    });
+  orders?.forEach((item) => {
+    totalAmount += item.totalPrice || 0;
+  });
 
   const lineState = {
     labels: ["Initial Amount", "Amount Earned"],
@@ -128,7 +125,7 @@ const Dashboard = () => {
           <h1>Admin Overview</h1>
         </div>
 
-        {/* Top Summary Banner */}
+        {/* Summary Card */}
         <div className="totalRevenueCard">
           <span className="revenueLabel">Total Revenue Earned</span>
           <h2 className="revenueValue">₹{totalAmount?.toLocaleString()}</h2>
@@ -138,17 +135,17 @@ const Dashboard = () => {
         <div className="statsGrid">
           <Link to="/admin/products" className="statCard">
             <span className="statTitle">Products</span>
-            <span className="statValue">{products ? products.length : 0}</span>
+            <span className="statValue">{products?.length || 0}</span>
           </Link>
 
           <Link to="/admin/orders" className="statCard">
             <span className="statTitle">Orders</span>
-            <span className="statValue">{orders ? orders.length : 0}</span>
+            <span className="statValue">{orders?.length || 0}</span>
           </Link>
 
           <Link to="/admin/users" className="statCard">
             <span className="statTitle">Users</span>
-            <span className="statValue">{users ? users.length : 0}</span>
+            <span className="statValue">{users?.length || 0}</span>
           </Link>
         </div>
 

@@ -23,7 +23,9 @@ const ProductList = () => {
   const [sidebarWidth, setSidebarWidth] = useState(240);
 
   const { error, products } = useSelector((state) => state.products);
-  const { error: deleteError, isDeleted } = useSelector((state) => state.product);
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.product
+  );
 
   const deleteProductHandler = (e, id) => {
     e.stopPropagation();
@@ -45,9 +47,7 @@ const ProductList = () => {
 
     if (isDeleted) {
       alert.success("Product Deleted Successfully");
-      // Reset delete status
       dispatch({ type: DELETE_PRODUCT_RESET });
-      // Re-fetch products locally to update table without navigation
       dispatch(getAdminProduct());
     } else {
       dispatch(getAdminProduct());
@@ -61,19 +61,19 @@ const ProductList = () => {
       minWidth: 240,
       flex: 2,
       renderCell: (params) => (
-        <div 
+        <div
           className="productCell"
           onClick={() => navigate(`/product/${params.row.id}`)}
           title="View product details"
         >
-          <img 
-            src={params.row.image || "/Profile.png"} 
-            alt={params.row.name} 
-            className="productTableImg" 
+          <img
+            src={params.row.image || "/Profile.png"}
+            alt={params.row.name}
+            className="productTableImg"
           />
           <span className="tableCellName">{params.row.name}</span>
         </div>
-      )
+      ),
     },
     {
       field: "Stock",
@@ -91,7 +91,7 @@ const ProductList = () => {
             {inStock ? `${params.value} available` : "Out of stock"}
           </span>
         );
-      }
+      },
     },
     {
       field: "price",
@@ -102,8 +102,10 @@ const ProductList = () => {
       headerAlign: "left",
       align: "left",
       renderCell: (params) => (
-        <span className="tableCellPrice">₹{params.value?.toLocaleString()}</span>
-      )
+        <span className="tableCellPrice">
+          ₹{params.value?.toLocaleString()}
+        </span>
+      ),
     },
     {
       field: "actions",
@@ -115,10 +117,18 @@ const ProductList = () => {
       align: "center",
       renderCell: (params) => (
         <div className="actionButtons" onClick={(e) => e.stopPropagation()}>
-          <Link to={`/admin/product/${params.row.id}`} className="actionBtn edit" title="Edit">
+          <Link
+            to={`/admin/product/${params.row.id}`}
+            className="actionBtn edit"
+            title="Edit"
+          >
             <EditIcon style={{ fontSize: 16 }} />
           </Link>
-          <button onClick={(e) => deleteProductHandler(e, params.row.id)} className="actionBtn delete" title="Delete">
+          <button
+            onClick={(e) => deleteProductHandler(e, params.row.id)}
+            className="actionBtn delete"
+            title="Delete"
+          >
             <DeleteIcon style={{ fontSize: 16 }} />
           </button>
         </div>
@@ -127,29 +137,36 @@ const ProductList = () => {
   ];
 
   const rows = [];
-  products &&
-    products.forEach((item) => {
-      rows.push({
-        id: item._id,
-        image: item.images && item.images[0] ? item.images[0].url : "",
-        name: item.name,
-        Stock: item.Stock,
-        price: item.price,
-      });
+  products?.forEach((item) => {
+    rows.push({
+      id: item._id,
+      image: item.images && item.images[0] ? item.images[0].url : "",
+      name: item.name,
+      Stock: item.Stock,
+      price: item.price,
     });
+  });
 
   return (
     <Fragment>
       <MetaData title="All Products - Admin" />
 
       <div className="adminLayout">
-        <SideBar sidebarWidth={sidebarWidth} setSidebarWidth={setSidebarWidth} />
+        <SideBar
+          sidebarWidth={sidebarWidth}
+          setSidebarWidth={setSidebarWidth}
+        />
 
-        <main className="adminContent" style={{ width: `calc(100% - ${sidebarWidth}px)` }}>
+        <main
+          className="adminContent"
+          style={{ width: `calc(100% - ${sidebarWidth}px)` }}
+        >
           <div className="productListHeader">
             <div>
               <h1>Products Directory</h1>
-              <p className="subHeading">Click any row to manage inventory and pricing</p>
+              <p className="subHeading">
+                Click any row to manage inventory and pricing
+              </p>
             </div>
             <Link to="/admin/product" className="createBtn">
               + New Product
