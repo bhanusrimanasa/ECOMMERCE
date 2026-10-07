@@ -236,9 +236,7 @@ export const requestReturnOrder = (id, reason) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RETURN_ORDER_FAIL,
-     payload: error.response && error.response.data.message
-        ? error.response.data.message
-        : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

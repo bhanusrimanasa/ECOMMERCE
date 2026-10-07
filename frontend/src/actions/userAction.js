@@ -38,10 +38,8 @@ import {
 } from "../constants/userConstants";
 import axios from "axios";
 
-// 🌟 Ensure cookies are included in cross-origin requests
 axios.defaults.withCredentials = true;
 
-// Helper function to clear previous user session artifacts
 const clearSessionStorage = () => {
   localStorage.removeItem("cartItems");
   localStorage.removeItem("shippingInfo");
@@ -60,7 +58,6 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
-    // Clear stale session items from local storage
     clearSessionStorage();
     dispatch({ type: "CLEAR_CART" });
 
@@ -86,7 +83,6 @@ export const register = (userData) => async (dispatch) => {
 
     const { data } = await axios.post(`/api/v1/register`, userData, config);
 
-    // Clear stale session items from local storage
     clearSessionStorage();
     dispatch({ type: "CLEAR_CART" });
 
@@ -120,7 +116,6 @@ export const logout = () => async (dispatch) => {
   try {
     await axios.get(`/api/v1/logout`);
 
-    // Clear local storage and reset Redux state
     clearSessionStorage();
     dispatch({ type: LOGOUT_SUCCESS });
     dispatch({ type: "CLEAR_CART" });
