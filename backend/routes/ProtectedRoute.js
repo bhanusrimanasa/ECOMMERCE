@@ -6,27 +6,22 @@ import Loader from "../layout/Loader/Loader";
 const ProtectedRoute = ({ children, isAdmin, isAgent }) => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
-  // Show a loading screen while user authentication status is verified
   if (loading) {
-    return <Loader />;
+    return React.createElement(Loader, null);
   }
 
-  // If not authenticated, redirect smoothly to the login page
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  // If it's an admin route, ensure the user has the 'admin' privilege role
   if (isAdmin === true && user && user.role !== "admin") {
     return <Navigate to="/login" replace />;
   }
 
-  // If it's a delivery agent route, allow access to 'deliveryAgent' or 'admin'
   if (isAgent === true && user && user.role !== "deliveryAgent" && user.role !== "admin") {
     return <Navigate to="/login" replace />;
   }
 
-  // If all validation passes, render the protected page content
   return children;
 };
 

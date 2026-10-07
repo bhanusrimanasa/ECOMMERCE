@@ -1,5 +1,5 @@
 import { legacy_createStore as createStore, combineReducers, applyMiddleware, compose } from "redux";
-import  thunk  from "redux-thunk";
+import thunk from "redux-thunk";
 import {
   newProductReducer,
   newReviewReducer,
@@ -25,6 +25,8 @@ import {
   newOrderReducer,
   orderDetailsReducer,
   orderReducer,
+  agentOrdersReducer,
+  deliveryProcessReducer,
 } from "./reducers/orderReducer";
 
 const reducer = combineReducers({
@@ -46,22 +48,22 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   productReviews: productReviewsReducer,
   review: reviewReducer,
+  // Delivery Agent Reducers
+  agentOrders: agentOrdersReducer,
+  deliveryProcess: deliveryProcessReducer,
 });
 
+// Cart and shipping info are now hydrated from MongoDB upon user login
 let initialState = {
   cart: {
-    cartItems: localStorage.getItem("cartItems")
-      ? JSON.parse(localStorage.getItem("cartItems"))
-      : [],
-    shippingInfo: localStorage.getItem("shippingInfo")
-      ? JSON.parse(localStorage.getItem("shippingInfo"))
-      : {},
+    cartItems: [],
+    shippingInfo: {},
   },
 };
 
 const middleware = [thunk];
 
-// Safely connects to the browser's Redux DevTools extension without requiring the dead NPM package
+// Safely connects to the browser's Redux DevTools extension
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(

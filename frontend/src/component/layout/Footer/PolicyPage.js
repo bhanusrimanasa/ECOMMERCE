@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import "./PolicyPage.css";
+import SendIcon from "@material-ui/icons/Send";
+import AndroidIcon from "@material-ui/icons/Android";
 
 const policyData = {
   "shipping-policy": {
@@ -34,7 +36,8 @@ const policyData = {
 };
 
 const PolicyPage = ({ page }) => {
-  const currentDoc = policyData[page];
+  const currentDoc = policyData[page] || policyData["faq"];
+  const chatEndRef = useRef(null);
   
   // Chatbox States
   const [question, setQuestion] = useState("");
@@ -46,6 +49,10 @@ const PolicyPage = ({ page }) => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [page]);
+
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatHistory, loading]);
 
   const handleChatSubmit = async (e) => {
     e.preventDefault();
@@ -78,7 +85,10 @@ const PolicyPage = ({ page }) => {
         {/* 🤖 Render the AI Chat Container ONLY on the FAQ layout route */}
         {page === "faq" && (
           <div className="aiChatContainer">
-            <h3>Ask our AI Store Assistant</h3>
+            <div className="aiChatHeader">
+             <AndroidIcon className="aiHeaderIcon" />
+              <h3>Ask our AI Store Assistant</h3>
+            </div>
             <div className="chatWindow">
               {chatHistory.map((msg, i) => (
                 <div key={i} className={`chatMessage ${msg.sender}`}>
@@ -86,6 +96,7 @@ const PolicyPage = ({ page }) => {
                 </div>
               ))}
               {loading && <div className="chatMessage bot typing">Thinking...</div>}
+              <div ref={chatEndRef} />
             </div>
             <form onSubmit={handleChatSubmit} className="chatInputForm">
               <input
@@ -95,7 +106,9 @@ const PolicyPage = ({ page }) => {
                 onChange={(e) => setQuestion(e.target.value)}
                 disabled={loading}
               />
-              <button type="submit" disabled={loading}>Send</button>
+              <button type="submit" disabled={loading}>
+                <SendIcon style={{ fontSize: 18 }} />
+              </button>
             </form>
           </div>
         )}

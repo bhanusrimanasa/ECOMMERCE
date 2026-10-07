@@ -10,12 +10,10 @@ const orderSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
-
     state: {
       type: String,
       required: true,
     },
-
     country: {
       type: String,
       required: true,
@@ -97,6 +95,32 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true,
     default: "Processing",
+  },
+  // 🚚 Granular status for delivery agent workflow
+  deliveryStatus: {
+    type: String,
+    enum: ["Processing", "Assigned", "Out for Delivery", "Delivered", "Failed"],
+    default: "Processing",
+  },
+  // 🚚 Delivery Agent Reference
+  assignedAgent: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+    default: null,
+  },
+  deliveryNotes: {
+    type: String,
+    default: "",
+  },
+  // 🌟 Return tracking fields
+  returnStatus: {
+    type: String,
+    enum: ["Not Requested", "Return Requested", "Returned", "Return Rejected"],
+    default: "Not Requested",
+  },
+  returnReason: {
+    type: String,
+    default: "",
   },
   deliveredAt: Date,
   createdAt: {

@@ -12,6 +12,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import RateReviewIcon from "@material-ui/icons/RateReview";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import CategoryIcon from "@material-ui/icons/Category";
 
 const Sidebar = ({ sidebarWidth, setSidebarWidth }) => {
   const location = useLocation();
@@ -24,7 +25,6 @@ const Sidebar = ({ sidebarWidth, setSidebarWidth }) => {
 
     const handleMouseMove = (moveEvent) => {
       const newWidth = startWidth + (moveEvent.clientX - startX);
-      // Constrain sidebar width between 180px and 450px
       if (newWidth >= 180 && newWidth <= 450) {
         setSidebarWidth(newWidth);
       }
@@ -90,6 +90,14 @@ const Sidebar = ({ sidebarWidth, setSidebarWidth }) => {
             </TreeItem>
           </TreeView>
         </div>
+
+        <Link
+          to="/admin/categories"
+          className={`navLink ${location.pathname === "/admin/categories" ? "active" : ""}`}
+        >
+          <CategoryIcon className="navIcon" />
+          <span>Categories</span>
+        </Link>
 
         <Link
           to="/admin/orders"

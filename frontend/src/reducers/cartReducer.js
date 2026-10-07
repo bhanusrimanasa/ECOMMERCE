@@ -3,8 +3,12 @@ import {
   REMOVE_CART_ITEM,
   SAVE_SHIPPING_INFO,
 } from "../constants/cartConstants";
-// 🌟 Import LOGOUT_SUCCESS to intercept the logout event and flush the state
-import { LOGOUT_SUCCESS } from "../constants/userConstants";
+import {
+  LOAD_USER_SUCCESS,
+  LOGIN_SUCCESS,
+  REGISTER_USER_SUCCESS,
+  LOGOUT_SUCCESS,
+} from "../constants/userConstants";
 
 export const cartReducer = (
   state = { cartItems: [], shippingInfo: {} },
@@ -44,11 +48,22 @@ export const cartReducer = (
         shippingInfo: action.payload,
       };
 
-    // 🌟 THE CRITICAL FIX: Completely flushes the cart items state upon user logout
+    // Hydrate cart items & shipping info from MongoDB when user logs in or loads profile
+    case LOAD_USER_SUCCESS:
+    case LOGIN_SUCCESS:
+    case REGISTER_USER_SUCCESS:
+      return {
+        ...state,
+        cartItems: action.payload.cartItems || [],
+        shippingInfo: action.payload.shippingInfo || {},
+      };
+
+    // Completely flush cart items and shipping info from Redux on logout
     case LOGOUT_SUCCESS:
       return {
         ...state,
         cartItems: [],
+        shippingInfo: {},
       };
 
     default:

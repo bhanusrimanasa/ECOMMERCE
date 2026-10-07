@@ -1,39 +1,56 @@
 import React, { Fragment, useEffect, useState } from "react";
 import MetaData from "../layout/MetaData";
-import { Link } from "react-router-dom";
-import { Typography } from "@material-ui/core";
+import { Link, useParams } from "react-router-dom";
+import { Typography, Button } from "@material-ui/core";
 import SideBar from "./Sidebar";
 import {
   getOrderDetails,
   clearErrors,
   updateOrder,
+  assignDeliveryAgent,
 } from "../../actions/orderAction";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import AccountTreeIcon from "@material-ui/icons/AccountTree";
-import { Button } from "@material-ui/core";
-import { UPDATE_ORDER_RESET } from "../../constants/orderConstants";
+import LocalShippingIcon from "@material-ui/icons/LocalShipping";
+import { UPDATE_ORDER_RESET, ASSIGN_AGENT_RESET } from "../../constants/orderConstants";
+import axios from "axios";
 import "./processOrder.css";
 
-const ProcessOrder = ({ history, match }) => {
-  const { order, error, loading } = useSelector((state) => state.orderDetails);
-  const { error: updateError, isUpdated } = useSelector((state) => state.order);
-
-  const updateOrderSubmitHandler = (e) => {
-    e.preventDefault();
-
-    const myForm = new FormData();
-
-    myForm.set("status", status);
-
-    dispatch(updateOrder(match.params.id, myForm));
-  };
-
+const ProcessOrder = () => {
+  const { id } = useParams(); // Fixed: Using useParams instead of match.params
   const dispatch = useDispatch();
   const alert = useAlert();
 
+  const { order, error, loading } = useSelector((state) => state.orderDetails);
+  const { error: updateError, isUpdated } = useSelector((state) => state.order);
+  const { isAssigned, error: assignError, loading: assignLoading } = useSelector(
+    (state) => state.deliveryProcess || {}
+  );
+
   const [status, setStatus] = useState("");
+  const [agents, setAgents] = useState([]);
+  const [selectedAgent, setSelectedAgent] = useState("");
+
+  useEffect(() => {
+    const fetchAgents = async () => {
+      try {
+        const { data } = await axios.get("/api/v1/admin/users");
+        const deliveryAgents = data.users.filter((u) => u.role === "deliveryAgent");
+        setAgents(deliveryAgents);
+      } catch (err) {
+        console.error("Failed to fetch delivery agents", err);
+      }
+    };
+    fetchAgents();
+  }, []);
+
+  useEffect(() => {
+    if (order && order.assignedAgent) {
+      setSelectedAgent(order.assignedAgent._id || order.assignedAgent);
+    }
+  }, [order]);
 
   useEffect(() => {
     if (error) {
@@ -44,13 +61,38 @@ const ProcessOrder = ({ history, match }) => {
       alert.error(updateError);
       dispatch(clearErrors());
     }
+    if (assignError) {
+      alert.error(assignError);
+      dispatch(clearErrors());
+    }
     if (isUpdated) {
-      alert.success("Order Updated Successfully");
+      alert.success("Order Status Updated Successfully");
       dispatch({ type: UPDATE_ORDER_RESET });
     }
+    if (isAssigned) {
+      alert.success("Delivery Agent Assigned Successfully");
+      dispatch({ type: ASSIGN_AGENT_RESET });
+    }
 
-    dispatch(getOrderDetails(match.params.id));
-  }, [dispatch, alert, error, match.params.id, isUpdated, updateError]);
+    if (id) {
+      dispatch(getOrderDetails(id));
+    }
+  }, [dispatch, alert, error, id, isUpdated, updateError, isAssigned, assignError]);
+
+  const updateOrderSubmitHandler = (e) => {
+    e.preventDefault();
+    const myForm = new FormData();
+    myForm.set("status", status);
+    dispatch(updateOrder(id, myForm));
+  };
+
+  const assignAgentSubmitHandler = (e) => {
+    e.preventDefault();
+    if (!selectedAgent) {
+      return alert.error("Please select a delivery agent");
+    }
+    dispatch(assignDeliveryAgent(id, selectedAgent));
+  };
 
   return (
     <Fragment>
@@ -58,7 +100,7 @@ const ProcessOrder = ({ history, match }) => {
       <div className="dashboard">
         <SideBar />
         <div className="newProductContainer">
-          {loading ? (
+          {loading || !order ? (
             <Loader />
           ) : (
             <div
@@ -127,8 +169,19 @@ const ProcessOrder = ({ history, match }) => {
                         {order.orderStatus && order.orderStatus}
                       </p>
                     </div>
+                    <div>
+                      <p>Delivery Agent Status:</p>
+                      <span>{order.deliveryStatus || "Not Assigned"}</span>
+                    </div>
+                    <div>
+                      <p>Assigned Agent:</p>
+                      <span>
+                        {order.assignedAgent ? order.assignedAgent.name : "None"}
+                      </span>
+                    </div>
                   </div>
                 </div>
+
                 <div className="confirmCartItems">
                   <Typography>Your Cart Items:</Typography>
                   <div className="confirmCartItemsContainer">
@@ -148,7 +201,7 @@ const ProcessOrder = ({ history, match }) => {
                   </div>
                 </div>
               </div>
-              {/*  */}
+
               <div
                 style={{
                   display: order.orderStatus === "Delivered" ? "none" : "block",
@@ -156,7 +209,38 @@ const ProcessOrder = ({ history, match }) => {
               >
                 <form
                   className="updateOrderForm"
+                  onSubmit={assignAgentSubmitHandler}
+                >
+                  <h1>Assign Agent</h1>
+
+                  <div>
+                    <LocalShippingIcon />
+                    <select
+                      value={selectedAgent}
+                      onChange={(e) => setSelectedAgent(e.target.value)}
+                    >
+                      <option value="">Choose Agent</option>
+                      {agents.map((agent) => (
+                        <option key={agent._id} value={agent._id}>
+                          {agent.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <Button
+                    id="createProductBtn"
+                    type="submit"
+                    disabled={assignLoading || selectedAgent === ""}
+                  >
+                    Assign
+                  </Button>
+                </form>
+
+                <form
+                  className="updateOrderForm"
                   onSubmit={updateOrderSubmitHandler}
+                  style={{ marginTop: "2rem" }}
                 >
                   <h1>Process Order</h1>
 
@@ -177,9 +261,7 @@ const ProcessOrder = ({ history, match }) => {
                   <Button
                     id="createProductBtn"
                     type="submit"
-                    disabled={
-                      loading ? true : false || status === "" ? true : false
-                    }
+                    disabled={loading || status === ""}
                   >
                     Process
                   </Button>

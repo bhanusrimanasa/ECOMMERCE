@@ -1,58 +1,67 @@
 import React from "react";
 import "./aboutSection.css";
-import { Button, Typography } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import GitHubIcon from "@material-ui/icons/GitHub";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
+import EmailIcon from "@material-ui/icons/Email";
+import PhoneIcon from "@material-ui/icons/Phone";
 
 const About = () => {
   const visitGitHub = () => {
-    window.location = "https://github.com";
+    window.open("https://github.com/bhanusrimanasa", "_blank");
   };
 
   return (
     <div className="aboutSection">
-      <div></div>
-      <div className="aboutSectionGradient"></div>
       <div className="aboutSectionContainer">
-        <Typography component="h1">About Us</Typography>
+        <h1>About Us</h1>
+        <div className="aboutDivider"></div>
 
-        <div>
-          <div>
-            <Typography variant="h5" style={{ marginTop: "1vmax" }}>
-              Mudhivarthi Bhanu Sri Manasa
-            </Typography>
+        <div className="aboutCardGrid">
+          {/* Main Info Card */}
+          <div className="aboutMainCard">
+            <h2>Mudhivarthi Bhanu Sri Manasa</h2>
             
-            <Typography variant="subtitle1" style={{ color: "rgba(255, 255, 255, 0.8)", margin: "0.5vmax 0" }}>
-              📧 bhanusrimanasa@gmail.com | 📞 +91 6303823149
-            </Typography>
+            <div className="contactMeta">
+              <span><EmailIcon className="metaIcon" /> bhanusrimanasa@gmail.com</span>
+              <span><PhoneIcon className="metaIcon" /> +91 6303823149</span>
+            </div>
 
-            <Button onClick={visitGitHub} color="primary" style={{ margin: "1vmax 0" }}>
-              Visit GitHub
+            <Button onClick={visitGitHub} className="githubBtn">
+              <GitHubIcon style={{ fontSize: 18 }} /> Visit GitHub
             </Button>
             
-            <span>
-              Welcome to MockMarket, a full-stack e-commerce application built using 
+            <p className="aboutDescription">
+              Welcome to <strong>MockMarket</strong>, a full-stack e-commerce application built using 
               React, Redux, Node.js, Express, and MongoDB. Designed with secure JWT 
               authentication, payment gateway integrations, and responsive UI layouts.
-            </span>
+            </p>
           </div>
-          <div className="aboutSectionContainer2">
-            <Typography component="h2">Connect With Us</Typography>
-            <a
-              href="https://github.com/bhanusrimanasa"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <GitHubIcon className="githubSvgIcon" />
-            </a>
 
-            <a 
-              href="https://linkedin.com" 
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <LinkedInIcon className="linkedinSvgIcon" />
-            </a>
+          {/* Social Links Card */}
+          <div className="aboutSocialCard">
+            <h3>Connect With Us</h3>
+            <div className="socialIconsGroup">
+              <a
+                href="https://github.com/bhanusrimanasa"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="GitHub Profile"
+                className="socialLink github"
+              >
+                <GitHubIcon />
+              </a>
+
+              <a 
+                href="https://linkedin.com" 
+                target="_blank"
+                rel="noopener noreferrer"
+                title="LinkedIn Profile"
+                className="socialLink linkedin"
+              >
+                <LinkedInIcon />
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -38,6 +38,15 @@ import {
 } from "../constants/userConstants";
 import axios from "axios";
 
+// 🌟 Ensure cookies are included in cross-origin requests
+axios.defaults.withCredentials = true;
+
+// Helper function to clear previous user session artifacts
+const clearSessionStorage = () => {
+  localStorage.removeItem("cartItems");
+  localStorage.removeItem("shippingInfo");
+};
+
 // Login
 export const login = (email, password) => async (dispatch) => {
   try {
@@ -51,13 +60,15 @@ export const login = (email, password) => async (dispatch) => {
       config
     );
 
+    // Clear stale session items from local storage
+    clearSessionStorage();
+    dispatch({ type: "CLEAR_CART" });
+
     dispatch({ type: LOGIN_SUCCESS, payload: response.data.user });
   } catch (error) {
-    // 🌟 THE CRITICAL FIX: Safe check if error.response exists before reading '.data'
     const errorMessage =
-      error.response && error.response.data && error.response.data.message
-        ? error.response.data.message
-        : "Cannot connect to server. Make sure backend is running.";
+      error.response?.data?.message ||
+      "Cannot connect to server. Make sure backend is running.";
 
     dispatch({
       type: LOGIN_FAIL,
@@ -75,11 +86,15 @@ export const register = (userData) => async (dispatch) => {
 
     const { data } = await axios.post(`/api/v1/register`, userData, config);
 
+    // Clear stale session items from local storage
+    clearSessionStorage();
+    dispatch({ type: "CLEAR_CART" });
+
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
     dispatch({
       type: REGISTER_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -93,30 +108,30 @@ export const loadUser = () => async (dispatch) => {
 
     dispatch({ type: LOAD_USER_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: LOAD_USER_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: LOAD_USER_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
-
-// Logout User
-// 📁 Inside src/actions/userAction.js
 
 // Logout User
 export const logout = () => async (dispatch) => {
   try {
     await axios.get(`/api/v1/logout`);
 
+    // Clear local storage and reset Redux state
+    clearSessionStorage();
     dispatch({ type: LOGOUT_SUCCESS });
-
-    // 🌟 THE FIX: Completely delete the cart cache from the browser on logout
-    localStorage.removeItem("cartItems");
-    
-    // Optional: Force a window reload to cleanly flush out ALL active Redux states
-    window.location.reload(); 
-    
+    dispatch({ type: "CLEAR_CART" });
   } catch (error) {
-    dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: LOGOUT_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
+
 // Update Profile
 export const updateProfile = (userData) => async (dispatch) => {
   try {
@@ -130,7 +145,7 @@ export const updateProfile = (userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PROFILE_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -152,25 +167,29 @@ export const updatePassword = (passwords) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_PASSWORD_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
 // Forgot Password
-export const forgotPassword = (email) => async (dispatch) => {
+export const forgotPassword = (userData) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
 
-    const config = { headers: { "Content-Type": "application/json" } };
+    const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-    const { data } = await axios.post(`/api/v1/password/forgot`, email, config);
+    const { data } = await axios.post(
+      `/api/v1/password/forgot`,
+      userData,
+      config
+    );
 
     dispatch({ type: FORGOT_PASSWORD_SUCCESS, payload: data.message });
   } catch (error) {
     dispatch({
       type: FORGOT_PASSWORD_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
@@ -192,12 +211,12 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: RESET_PASSWORD_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
-// get All Users
+// Get All Users (Admin)
 export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USERS_REQUEST });
@@ -205,11 +224,14 @@ export const getAllUsers = () => async (dispatch) => {
 
     dispatch({ type: ALL_USERS_SUCCESS, payload: data.users });
   } catch (error) {
-    dispatch({ type: ALL_USERS_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: ALL_USERS_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
 
-// get  User Details
+// Get User Details (Admin)
 export const getUserDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: USER_DETAILS_REQUEST });
@@ -217,11 +239,14 @@ export const getUserDetails = (id) => async (dispatch) => {
 
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data.user });
   } catch (error) {
-    dispatch({ type: USER_DETAILS_FAIL, payload: error.response.data.message });
+    dispatch({
+      type: USER_DETAILS_FAIL,
+      payload: error.response?.data?.message || error.message,
+    });
   }
 };
 
-// Update User
+// Update User (Admin)
 export const updateUser = (id, userData) => async (dispatch) => {
   try {
     dispatch({ type: UPDATE_USER_REQUEST });
@@ -238,12 +263,12 @@ export const updateUser = (id, userData) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: UPDATE_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
-// Delete User
+// Delete User (Admin)
 export const deleteUser = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_USER_REQUEST });
@@ -254,7 +279,7 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_USER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };

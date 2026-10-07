@@ -272,3 +272,191 @@
     margin: 0 0.5rem;
   }
 }
+/* ==========================================
+   RETURN STATUS BLOCK & BUTTONS
+   ========================================== */
+
+.returnBlock {
+  margin-top: 20px;
+  padding: 18px 24px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.returnStatusRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.returnBadge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 20px;
+  background-color: rgba(237, 67, 55, 0.15);
+  color: #ed4337;
+  border: 1px solid rgba(237, 67, 55, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.returnReasonText {
+  font-size: 14px;
+  color: #a0aec0;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.returnReasonText b {
+  color: #e2e8f0;
+}
+
+.returnActionBtn {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #ed4337 0%, #c0392b 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 12px rgba(237, 67, 55, 0.25);
+}
+
+.returnActionBtn:hover {
+  background: linear-gradient(135deg, #ff5247 0%, #d63031 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(237, 67, 55, 0.35);
+}
+
+.returnActionBtn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================
+   RETURN MODAL OVERLAY & BOX
+   ========================================== */
+
+.returnModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.returnModalBox {
+  width: 90%;
+  max-width: 500px;
+  background: #121926;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.returnModalBox h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.returnModalBox form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.returnModalBox textarea {
+  width: 100%;
+  background: #0b0f19;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  color: #ffffff;
+  padding: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease;
+}
+
+.returnModalBox textarea:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.returnModalButtons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.returnModalButtons button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.returnModalButtons .cancelBtn {
+  background: transparent;
+  color: #a0aec0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.returnModalButtons .cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: #ffffff;
+}
+
+.returnModalButtons .submitBtn {
+  background: #3b82f6;
+  color: #ffffff;
+}
+
+.returnModalButtons .submitBtn:hover {
+  background: #2563eb;
+}
+
+.returnModalButtons .submitBtn:disabled {
+  background: #4b5563;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -45,12 +45,14 @@ const ProductList = () => {
 
     if (isDeleted) {
       alert.success("Product Deleted Successfully");
-      navigate("/admin/dashboard");
+      // Reset delete status
       dispatch({ type: DELETE_PRODUCT_RESET });
+      // Re-fetch products locally to update table without navigation
+      dispatch(getAdminProduct());
+    } else {
+      dispatch(getAdminProduct());
     }
-
-    dispatch(getAdminProduct());
-  }, [dispatch, alert, error, deleteError, navigate, isDeleted]);
+  }, [dispatch, alert, error, deleteError, isDeleted]);
 
   const columns = [
     {

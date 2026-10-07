@@ -1,17 +1,25 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./orderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
 import { Link, useParams } from "react-router-dom";
-import { getOrderDetails, clearErrors } from "../../actions/orderAction";
+import { getOrderDetails, requestReturnOrder, clearErrors } from "../../actions/orderAction";
+import { RETURN_ORDER_RESET } from "../../constants/orderConstants";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 
 const OrderDetails = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
+  const { isReturned, error: returnError, loading: returnLoading } = useSelector(
+    (state) => state.returnOrder || {}
+  );
+
   const dispatch = useDispatch();
   const alert = useAlert();
   const { id } = useParams();
+
+  const [openReturnModal, setOpenReturnModal] = useState(false);
+  const [returnReason, setReturnReason] = useState("");
 
   useEffect(() => {
     if (error) {
@@ -19,11 +27,33 @@ const OrderDetails = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getOrderDetails(id));
-  }, [dispatch, alert, error, id]);
+    if (returnError) {
+      alert.error(returnError);
+      dispatch(clearErrors());
+    }
+
+    if (isReturned) {
+      alert.success("Return request submitted successfully!");
+      dispatch({ type: RETURN_ORDER_RESET });
+      setOpenReturnModal(false);
+      dispatch(getOrderDetails(id));
+    } else {
+      dispatch(getOrderDetails(id));
+    }
+  }, [dispatch, alert, error, returnError, isReturned, id]);
+
+  const handleReturnSubmit = (e) => {
+    e.preventDefault();
+    if (!returnReason.trim()) {
+      alert.error("Please enter a reason for your return.");
+      return;
+    }
+    dispatch(requestReturnOrder(id, returnReason));
+  };
 
   const isPaid = order?.paymentInfo?.status === "succeeded";
   const isDelivered = order?.orderStatus === "Delivered";
+  const hasReturnRequested = order?.returnStatus && order?.returnStatus !== "Not Requested";
 
   return (
     <Fragment>
@@ -71,6 +101,32 @@ const OrderDetails = () => {
                     <span>{isDelivered ? "Delivered" : "Processing"}</span>
                   </div>
                 </div>
+
+                {/* Return Order Status / Action Banner */}
+                {isDelivered && (
+                  <div className="sectionBlock returnBlock">
+                    <h3 className="sectionTitle">Return Status</h3>
+                    <div className="returnStatusRow">
+                      <span className="metaLabel">STATUS: </span>
+                      <span className="returnBadge">{order?.returnStatus}</span>
+                    </div>
+
+                    {order?.returnReason && (
+                      <p className="returnReasonText">
+                        <b>Reason:</b> {order.returnReason}
+                      </p>
+                    )}
+
+                    {!hasReturnRequested && (
+                      <button
+                        className="returnActionBtn"
+                        onClick={() => setOpenReturnModal(true)}
+                      >
+                        Request Return
+                      </button>
+                    )}
+                  </div>
+                )}
 
                 {/* Products List Section */}
                 <div className="sectionBlock">
@@ -136,6 +192,40 @@ const OrderDetails = () => {
               </div>
             </div>
           </div>
+
+          {/* Modal for Return Request */}
+          {openReturnModal && (
+            <div className="returnModalOverlay">
+              <div className="returnModalBox">
+                <h3>Request Order Return</h3>
+                <form onSubmit={handleReturnSubmit}>
+                  <textarea
+                    placeholder="Enter reason for return..."
+                    value={returnReason}
+                    onChange={(e) => setReturnReason(e.target.value)}
+                    rows="4"
+                    required
+                  />
+                  <div className="returnModalButtons">
+                    <button
+                      type="button"
+                      className="cancelBtn"
+                      onClick={() => setOpenReturnModal(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="submitBtn"
+                      disabled={returnLoading}
+                    >
+                      {returnLoading ? "Submitting..." : "Submit"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </Fragment>
       )}
     </Fragment>

@@ -1,118 +1,237 @@
-.searchContainer {
-  width: 100vw;
-  height: 100vh;
-  max-width: 100%;
+.stickySearchHeader {
+  width: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  background-color: rgb(231, 231, 231);
-  position: fixed;
+  background-color: #0b0e14;
+  position: sticky;
   top: 0;
-  left: 0;
+  z-index: 1000;
+  padding: 1rem 0 0.5rem 0;
+  border-bottom: 1px solid #1e2638;
 }
 
 .searchBox {
   display: flex;
-  width: 100%;
-  justify-content: center;
+  width: 90%;
+  max-width: 550px;
   align-items: center;
 }
 
-/* 🌟 CRUCIAL: Keeps the dropdown list perfectly aligned under the text box */
 .inputWrapper {
   position: relative;
-  width: 50%;
-  display: flex;
-  flex-direction: column;
+  flex: 1;
 }
 
-/* Updated selectors to look inside the wrapper instead of direct children */
 .searchBox .inputWrapper > input[type="text"] {
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.274);
-  background-color: white;
-  border: none;
-  color: rgba(0, 0, 0, 0.637);
-  padding: 1vmax 2vmax;
-  width: 100%; /* Spans full width of the wrapper parent */
+  background-color: #161b26;
+  border: 1px solid #2a3447;
+  border-right: none;
+  border-radius: 6px 0 0 6px;
+  color: #e2e8f0;
+  padding: 0 1rem;
+  width: 100%;
   outline: none;
-  border-radius: 0%;
-  font: 300 1.1vmax cursive;
+  font-size: 0.9rem;
+  height: 40px;
   box-sizing: border-box;
-  height: 50px; /* Fixed cross-browser height */
 }
 
-.searchBox > input[type="submit"] {
-  height: 50px; /* Aligns height perfectly with the input field */
-  border-radius: 0%;
-  background-color: tomato;
-  border: none;
-  padding: 1vmax;
-  width: 10%;
-  font: 300 1.1vmax "Roboto";
-  cursor: pointer;
-  color: white;
-  transition: all 0.5s;
+.searchBox .inputWrapper > input[type="text"]:focus {
+  border-color: #ff6347;
 }
 
-.searchBox > input[type="submit"]:hover {
-  background-color: rgb(55, 97, 214);
-}
-
-/* 🌟 GOOGLE STYLE FLOATING SUGGESTIONS LIST */
+/* Floating Autocomplete Dropdown */
 .suggestionList {
   position: absolute;
-  top: 52px; /* Floats exactly below the 50px input field */
+  top: calc(100% + 6px);
   left: 0;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 0 0 4px 4px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  list-style: none;
-  padding: 0;
+  right: 0;
+  background-color: #111622;
+  border: 1px solid #1e2638;
+  border-radius: 8px;
+  list-style: none; /* Removes HTML bullet dots */
   margin: 0;
-  z-index: 10;
-  max-height: 250px;
+  padding: 0.4rem 0;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  max-height: 240px;
   overflow-y: auto;
 }
 
-.suggestionList > li {
-  padding: 12px 20px;
-  font: 300 1vmax "Roboto";
-  color: #333;
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  color: #e2e8f0;
+  font-size: 0.9rem;
   cursor: pointer;
-  text-align: left;
-  transition: all 0.3s;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.suggestionList > li:hover {
-  background-color: #f1f1f1;
-  color: tomato;
+.suggestionItem:hover {
+  background-color: #1c2333;
+  color: #ff6347;
 }
 
-/* 📱 RESPONSIVE LAYOUT MOBILE MEDIA QUERY */
-@media screen and (max-width: 600px) {
-  .inputWrapper {
-    width: 65%; /* Allocates more room on small screen widths */
-  }
+.suggestionIcon {
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
 
-  .searchBox .inputWrapper > input[type="text"] {
-    font: 300 4vw cursive;
-    height: 45px;
-  }
+.searchBox button {
+  height: 40px;
+  border-radius: 0 6px 6px 0;
+  background-color: #ff6347;
+  border: 1px solid #ff6347;
+  padding: 0 1.2rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
 
-  .searchBox > input[type="submit"] {
-    height: 45px;
-    width: 25%;
-    font: 300 4vw "Roboto";
-  }
-  
-  .suggestionList {
-    top: 47px;
-  }
-  
-  .suggestionList > li {
-    padding: 10px 15px;
-    font: 300 3.5vw "Roboto";
-  }
+.searchBox button:hover {
+  background-color: #e0482b;
+}
+
+/* Category Filter Badges */
+.categoryChipsBar {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+  padding: 0.4rem 1rem;
+  overflow-x: auto;
+  max-width: 100%;
+  scrollbar-width: none; /* Hide scrollbar for Chrome/Firefox */
+}
+
+.categoryChipsBar::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  background-color: #161b26;
+  border: 1px solid #2a3447;
+  color: #94a3b8;
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.chip:hover {
+  border-color: #ff6347;
+  color: #ffffff;
+}
+
+.activeChip {
+  background-color: #ff6347;
+  border-color: #ff6347;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* ==========================================
+   HORIZONTAL CAROUSEL LAYOUT
+   ========================================== */
+.searchCategoryContainer {
+  width: 92%;
+  max-width: 1350px;
+  margin: 1.5rem auto;
+  min-height: 70vh;
+}
+
+.categoryBlock {
+  margin-bottom: 2.5rem;
+  background-color: #111622;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  border: 1px solid #1e2638;
+}
+
+.categoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #1e2638;
+}
+
+.titleGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.categoryHeader h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin: 0;
+}
+
+.countBadge {
+  background-color: #1e2638;
+  color: #94a3b8;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 12px;
+}
+
+.viewAllBtn {
+  font-size: 0.82rem;
+  color: #ff6347;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.viewAllBtn:hover {
+  text-decoration: underline;
+}
+
+/* Horizontal Scroll Container */
+.categoryHorizontalRow {
+  display: flex;
+  gap: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 0.8rem;
+  scroll-behavior: smooth;
+}
+
+/* Modern subtle scrollbar */
+.categoryHorizontalRow::-webkit-scrollbar {
+  height: 6px;
+}
+
+.categoryHorizontalRow::-webkit-scrollbar-track {
+  background: #111622;
+}
+
+.categoryHorizontalRow::-webkit-scrollbar-thumb {
+  background: #2a3447;
+  border-radius: 4px;
+}
+
+.categoryHorizontalRow::-webkit-scrollbar-thumb:hover {
+  background: #ff6347;
+}
+
+/* Scale down cards to prevent massive empty spaces */
+.compactCardWrapper {
+  flex: 0 0 210px; /* Limits card width */
+  max-width: 210px;
+}
+
+.noProductsFound {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 4rem;
+  color: #64748b;
 }

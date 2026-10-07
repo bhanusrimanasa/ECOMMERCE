@@ -7,10 +7,16 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
+import { useParams, useNavigate } from "react-router-dom"; // Modern React Router compatibility
 
 const ResetPassword = ({ history, match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  
+  // React Router v6 hooks with v5 fallback
+  const params = useParams();
+  const navigate = useNavigate();
+  const token = match?.params?.token || params?.token;
 
   const { error, success, loading } = useSelector(
     (state) => state.forgotPassword
@@ -22,12 +28,13 @@ const ResetPassword = ({ history, match }) => {
   const resetPasswordSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    // 🌟 Pass a plain object instead of FormData to match Content-Type: application/json
+    const passwords = {
+      password,
+      confirmPassword,
+    };
 
-    myForm.set("password", password);
-    myForm.set("confirmPassword", confirmPassword);
-
-    dispatch(resetPassword(match.params.token, myForm));
+    dispatch(resetPassword(token, passwords));
   };
 
   useEffect(() => {
@@ -37,11 +44,15 @@ const ResetPassword = ({ history, match }) => {
     }
 
     if (success) {
-      alert.success("Password Updated Successfully");
+      alert.success("Password Reset Successfully");
 
-      history.push("/login");
+      if (history) {
+        history.push("/login");
+      } else if (navigate) {
+        navigate("/login");
+      }
     }
-  }, [dispatch, error, alert, history, success]);
+  }, [dispatch, error, alert, history, navigate, success]);
 
   return (
     <Fragment>
@@ -49,10 +60,10 @@ const ResetPassword = ({ history, match }) => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Change Password" />
+          <MetaData title="Reset Password" />
           <div className="resetPasswordContainer">
             <div className="resetPasswordBox">
-              <h2 className="resetPasswordHeading">Update Profile</h2>
+              <h2 className="resetPasswordHeading">Reset Password</h2>
 
               <form
                 className="resetPasswordForm"
@@ -80,7 +91,7 @@ const ResetPassword = ({ history, match }) => {
                 </div>
                 <input
                   type="submit"
-                  value="Update"
+                  value="Reset Password"
                   className="resetPasswordBtn"
                 />
               </form>

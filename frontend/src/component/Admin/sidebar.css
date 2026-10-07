@@ -55,15 +55,21 @@
   text-decoration: none;
   border-radius: 8px;
   white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .navIcon {
   font-size: 1.25rem !important;
   color: #64748b;
+  transition: color 0.2s ease;
 }
 
 .navLink:hover {
   background-color: #1e293b;
+  color: #f8fafc;
+}
+
+.navLink:hover .navIcon {
   color: #f8fafc;
 }
 

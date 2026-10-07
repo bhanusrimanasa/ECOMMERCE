@@ -35,7 +35,30 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
+    enum: ["user", "admin", "deliveryAgent"],
     default: "user",
+  },
+  cartItems: [
+    {
+      product: {
+        type: mongoose.Schema.ObjectId,
+        ref: "Product",
+        required: true,
+      },
+      name: { type: String, required: true },
+      price: { type: Number, required: true },
+      image: { type: String, required: true },
+      stock: { type: Number, required: true },
+      quantity: { type: Number, required: true },
+    },
+  ],
+  shippingInfo: {
+    address: { type: String },
+    city: { type: String },
+    state: { type: String },
+    country: { type: String },
+    pinCode: { type: Number },
+    phoneNo: { type: Number },
   },
   createdAt: {
     type: Date,
@@ -62,17 +85,14 @@ userSchema.methods.getJWTToken = function () {
 };
 
 // Compare Password
-
 userSchema.methods.comparePassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
 // Generating Password Reset Token
 userSchema.methods.getResetPasswordToken = function () {
-  // Generating Token
   const resetToken = crypto.randomBytes(20).toString("hex");
 
-  // Hashing and adding resetPasswordToken to userSchema
   this.resetPasswordToken = crypto
     .createHash("sha256")
     .update(resetToken)

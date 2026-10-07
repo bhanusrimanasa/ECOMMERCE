@@ -34,7 +34,7 @@ const LoginSignUp = () => {
 
   const { name, email, password } = user;
 
-  const [avatar, setAvatar] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const loginSubmit = (e) => {
@@ -44,6 +44,11 @@ const LoginSignUp = () => {
 
   const registerSubmit = (e) => {
     e.preventDefault();
+
+    if (!avatar) {
+      alert.error("Please select an avatar image");
+      return;
+    }
 
     const myForm = new FormData();
     myForm.set("name", name);
@@ -55,17 +60,19 @@ const LoginSignUp = () => {
 
   const registerDataChange = (e) => {
     if (e.target.name === "avatar") {
-      const reader = new FileReader();
+      const file = e.target.files[0];
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setAvatarPreview(reader.result);
-          setAvatar(reader.result);
-        }
-      };
+      if (file) {
+        const reader = new FileReader();
 
-      if (e.target.files[0]) {
-        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+          if (reader.readyState === 2) {
+            setAvatarPreview(reader.result);
+            setAvatar(reader.result); // Sets the full valid Base64 string
+          }
+        };
+
+        reader.readAsDataURL(file);
       }
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
@@ -73,7 +80,7 @@ const LoginSignUp = () => {
   };
 
   const getRedirectPath = () => {
-    if (!location.search) return "/account";
+    if (!location.search) return "/";
     const path = location.search.split("=")[1];
     return path.startsWith("/") ? path : `/${path}`;
   };
@@ -199,6 +206,7 @@ const LoginSignUp = () => {
                     type="file"
                     name="avatar"
                     accept="image/*"
+                    required
                     onChange={registerDataChange}
                   />
                 </div>

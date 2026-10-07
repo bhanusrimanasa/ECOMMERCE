@@ -1,128 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 .policyPageContainer {
   width: 100vw;
-  min-height: 80vh;
+  min-height: 100vh;
   max-width: 100%;
-  background-color: #f3f3f3;
+  background-color: #090d16;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 50px 20px;
+  padding: 3.5rem 1.5rem;
   box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .policyPageBox {
   width: 100%;
-  max-width: 800px;
-  background-color: #ffffff;
-  padding: 40px;
-  border-radius: 4px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  font-family: "Roboto", sans-serif;
+  max-width: 850px;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
 }
 
 .policyPageBox h1 {
-  font-size: 26px;
-  color: #232f3e;
-  margin-bottom: 12px;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
 }
 
 .policyDivider {
-  width: 50px;
+  width: 60px;
   height: 4px;
-  background-color: #ff9900;
-  margin-bottom: 25px;
+  background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  margin-bottom: 1.75rem;
+  border-radius: 2px;
 }
 
 .policyPageBox p {
-  font-size: 15px;
-  line-height: 1.7;
-  color: #333333;
-  margin-bottom: 18px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #cbd5e1;
+  margin-bottom: 1.25rem;
   white-space: pre-line;
 }
-/* AI Chat Panel Wrapper styling constraints */
+
+/* AI Chat Panel Wrapper */
 .aiChatContainer {
-  margin-top: 40px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background: #fdfdfd;
+  margin-top: 2.5rem;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  background: #0b1120;
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
-.aiChatContainer h3 {
-  background-color: #232f3e;
-  color: white;
+.aiChatHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background-color: #1e293b;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #334155;
+}
+
+.aiHeaderIcon {
+  color: #38bdf8 !important;
+  font-size: 1.25rem !important;
+}
+
+.aiChatHeader h3 {
+  color: #f8fafc;
   margin: 0;
-  padding: 15px;
-  font-size: 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .chatWindow {
-  height: 300px;
+  height: 320px;
   overflow-y: auto;
-  padding: 15px;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  background-color: #f9f9f9;
+  gap: 0.85rem;
+  background-color: #090d16;
 }
 
 .chatMessage {
   display: flex;
-  max-width: 75%;
-  padding: 10px 14px;
-  border-radius: 14px;
-  font-size: 14px;
-  line-height: 1.4;
+  max-width: 80%;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 .chatMessage.bot {
-  background-color: #eaeded;
-  color: #333;
+  background-color: #1e293b;
+  color: #f8fafc;
   align-self: flex-start;
   border-top-left-radius: 2px;
+  border: 1px solid #334155;
 }
 
 .chatMessage.user {
-  background-color: #ff9900;
-  color: white;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
+  color: #ffffff;
   align-self: flex-end;
   border-top-right-radius: 2px;
 }
 
 .chatMessage.typing {
   font-style: italic;
-  color: #777;
+  color: #94a3b8;
+  background-color: #1e293b;
 }
 
 .chatInputForm {
   display: flex;
-  border-top: 1px solid #ddd;
+  border-top: 1px solid #1e293b;
+  background-color: #0f172a;
 }
 
 .chatInputForm input {
   flex: 1;
-  padding: 15px;
+  padding: 0.85rem 1.25rem;
   border: none;
   outline: none;
-  font-size: 14px;
+  font-size: 0.875rem;
+  background-color: transparent;
+  color: #f8fafc;
+  font-family: inherit;
+}
+
+.chatInputForm input::placeholder {
+  color: #64748b;
 }
 
 .chatInputForm button {
-  background-color: #ff9900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%);
   color: white;
   border: none;
-  padding: 0 25px;
-  font-weight: bold;
+  padding: 0 1.25rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
-.chatInputForm button:hover {
-  background-color: #df8500;
+.chatInputForm button:hover:not(:disabled) {
+  opacity: 0.9;
 }
 
-.chatInputForm button:disabled, .chatInputForm input:disabled {
-  background-color: #ccc;
+.chatInputForm button:disabled, 
+.chatInputForm input:disabled {
+  opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* Scrollbar Customization for Chat */
+.chatWindow::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatWindow::-webkit-scrollbar-track {
+  background: #090d16;
+}
+
+.chatWindow::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 3px;
+}
+
+@media screen and (max-width: 600px) {
+  .policyPageBox {
+    padding: 1.5rem;
+  }
+
+  .chatMessage {
+    max-width: 90%;
+  }
 }

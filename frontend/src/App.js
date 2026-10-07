@@ -31,6 +31,7 @@ import OrderSuccess from "./component/Cart/OrderSuccess";
 import MyOrders from "./component/Order/MyOrders";
 import OrderDetails from "./component/Order/OrderDetails";
 import Dashboard from "./component/Admin/Dashboard.js";
+import AgentDashboard from "./component/Agent/AgentDashboard.js";
 import ProductList from "./component/Admin/ProductList.js";
 import NewProduct from "./component/Admin/NewProduct";
 import UpdateProduct from "./component/Admin/UpdateProduct";
@@ -43,11 +44,11 @@ import Contact from "./component/layout/Contact/Contact";
 import About from "./component/layout/About/About";
 import NotFound from "./component/layout/Not Found/NotFound";
 import PolicyPage from "./component/layout/Footer/PolicyPage.js";
-
+import CategoryList from "./component/Admin/CategoryList";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setStripeApiKey] = useState("");
-
+  
   async function getStripeApiKey() {
     try {
       const { data } = await axios.get("/api/v1/stripeapikey");
@@ -140,9 +141,24 @@ function App() {
         <Route path="/returns" element={<PolicyPage page="returns" />} />
         <Route path="/privacy" element={<PolicyPage page="privacy" />} />
         <Route path="/faq" element={<PolicyPage page="faq" />} />
-
+        <Route
+              path="/admin/categories"
+              element={
+                <ProtectedRoute isAdmin={true}>
+                  <CategoryList />
+                </ProtectedRoute>
+              }
+            />
         {/* 404 Not Found Catch-All Route */}
         <Route path="*" element={<NotFound />} />
+        <Route
+  path="/agent/dashboard"
+  element={
+    <ProtectedRoute isAgent={true}>
+      <AgentDashboard />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
 
       <Footer />

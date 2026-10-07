@@ -1,0 +1,100 @@
+.categoryListContainer {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #0b0e14;
+  min-height: 100vh;
+  padding: 2rem;
+  color: #f1f5f9;
+}
+
+.categoryListHeading {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: #ffffff;
+  border-bottom: 1px solid #1e2638;
+  padding-bottom: 0.75rem;
+}
+
+.addCategoryForm {
+  display: flex;
+  gap: 1rem;
+  max-width: 500px;
+  margin-bottom: 2.5rem;
+}
+
+.addCategoryForm input {
+  flex: 1;
+  background-color: #161b26;
+  border: 1px solid #2a3447;
+  border-radius: 6px;
+  color: #f1f5f9;
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.addCategoryForm input:focus {
+  border-color: #ff6347;
+}
+
+.addCategoryForm button {
+  background-color: #ff6347;
+  color: #ffffff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addCategoryForm button:hover {
+  background-color: #e0482b;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+  max-width: 900px;
+}
+
+.categoryCard {
+  background-color: #111622;
+  border: 1px solid #1e2638;
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.categoryCard span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #e2e8f0;
+}
+
+.deleteCatBtn {
+  background-color: transparent;
+  color: #ef4444;
+  border: 1px solid #ef4444;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteCatBtn:hover {
+  background-color: #ef4444;
+  color: #ffffff;
+}
+
+.loadingText,
+.noCategoryText {
+  color: #64748b;
+  font-size: 1rem;
+}

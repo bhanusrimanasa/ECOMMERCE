@@ -1,4 +1,4 @@
-const ErrorHander = require("../utils/errorhander");
+const ErrorHandler = require("../utils/errorhander");
 const catchAsyncErrors = require("./catchAsyncErrors");
 const jwt = require("jsonwebtoken");
 const User = require("../models/userModel");
@@ -7,12 +7,18 @@ exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
   const { token } = req.cookies;
 
   if (!token) {
-    return next(new ErrorHander("Please Login to access this resource", 401));
+    return next(new ErrorHandler("Please Login to access this resource", 401));
   }
 
+  // If token is invalid or expired, jwt.verify throws an error that 
+  // catchAsyncErrors automatically passes to middleware/error.js
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
 
   req.user = await User.findById(decodedData.id);
+
+  if (!req.user) {
+    return next(new ErrorHandler("User not found with this id", 404));
+  }
 
   next();
 });
@@ -21,8 +27,8 @@ exports.authorizeRoles = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
       return next(
-        new ErrorHander(
-          `Role: ${req.user.role} is not allowed to access this resouce `,
+        new ErrorHandler(
+          `Role: ${req.user.role} is not allowed to access this resource`,
           403
         )
       );

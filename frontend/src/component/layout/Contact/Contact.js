@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import Button from "@material-ui/core/Button";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PhoneIcon from "@material-ui/icons/Phone";
+import EmailIcon from "@material-ui/icons/Email";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import CheckIcon from "@material-ui/icons/Check";
 
 const Contact = () => {
   const [copied, setCopied] = useState(false);
@@ -12,11 +17,11 @@ const Contact = () => {
   );
   const mailtoString = `mailto:${emailAddress}?subject=${emailSubject}&body=${emailBody}`;
 
-  // Fallback function: Copies email to clipboard if standard mailto fails
+  // Copy email to clipboard fallback
   const copyEmailToClipboard = () => {
     navigator.clipboard.writeText(emailAddress);
     setCopied(true);
-    setTimeout(() => setCopied(false), 3000); // Reset alert text after 3 seconds
+    setTimeout(() => setCopied(false), 3000);
   };
 
   return (
@@ -24,30 +29,41 @@ const Contact = () => {
       <div className="contactBox">
         <h1>Contact Us</h1>
         <div className="contactDivider"></div>
-        <p>Have a question about an order, shipping parameters, or our AI Assistant?</p>
-        <p>We are here to help you 24/7!</p>
+        <p className="contactSubtitle">
+          Have a question about an order, shipping parameters, or our AI Assistant?
+        </p>
+        <p className="contactHighlight">We are here to help you 24/7!</p>
 
         <div className="contactDetails">
           <div className="detailItem">
-            <strong>📍 Address:</strong> Meghalaya, India
+            <LocationOnIcon className="detailIcon" />
+            <span><strong>Address:</strong> Meghalaya, India</span>
           </div>
           <div className="detailItem">
-            <strong>📞 Phone:</strong> +91 6303823149
+            <PhoneIcon className="detailIcon" />
+            <span><strong>Phone:</strong> +91 6303823149</span>
           </div>
           <div className="detailItem">
-            <strong>📧 Support Email:</strong> {emailAddress}
+            <EmailIcon className="detailIcon" />
+            <span><strong>Support Email:</strong> {emailAddress}</span>
           </div>
         </div>
 
         <div className="contactActions">
-          {/* Main system action button */}
           <a className="mailBtn" href={mailtoString}>
             <Button variant="contained">Send Us An Email</Button>
           </a>
 
-          {/* Backup Action Trigger */}
           <button className="copyEmailBtn" onClick={copyEmailToClipboard}>
-            {copied ? "✓ Copied to Clipboard!" : "Copy Email Address"}
+            {copied ? (
+              <>
+                <CheckIcon style={{ fontSize: 16 }} /> Copied to Clipboard!
+              </>
+            ) : (
+              <>
+                <FileCopyIcon style={{ fontSize: 16 }} /> Copy Email Address
+              </>
+            )}
           </button>
         </div>
       </div>

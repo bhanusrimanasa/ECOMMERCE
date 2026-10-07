@@ -20,9 +20,9 @@ const ForgotPassword = () => {
   const forgotPasswordSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    // 🌟 Send JSON object instead of raw state string or FormData
+    const myForm = { email };
 
-    myForm.set("email", email);
     dispatch(forgotPassword(myForm));
   };
 
@@ -63,7 +63,6 @@ const ForgotPassword = () => {
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
-
                 <input
                   type="submit"
                   value="Send"

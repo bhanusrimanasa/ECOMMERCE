@@ -1,81 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 .contactContainer {
-  background-color: #f1f1f1;
-  height: 100vh;
+  background-color: #090d16;
+  min-height: 100vh;
   width: 100vw;
   max-width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
 .contactBox {
-  background-color: white;
-  padding: 40px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  background-color: #0f172a;
+  border: 1px solid #1e293b;
+  padding: 2.5rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  border-radius: 16px;
   text-align: center;
-  max-width: 500px;
-  width: 90%;
+  max-width: 520px;
+  width: 100%;
 }
 
 .contactBox h1 {
-  font: 400 2.5vmax "Roboto";
-  color: #232f3e;
-  margin-bottom: 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -0.02em;
 }
 
 .contactDivider {
-  width: 80px;
+  width: 60px;
   height: 4px;
-  background-color: #ff9900;
-  margin: 0 auto 25px auto;
+  background: linear-gradient(135deg, #38bdf8 0%, #2563eb 100%);
+  margin: 0 auto 1.5rem auto;
   border-radius: 2px;
 }
 
-.contactBox p {
-  font: 300 1.1vmax "Roboto";
-  color: #555;
-  margin: 8px 0;
+.contactSubtitle {
+  font-size: 0.95rem;
+  color: #94a3b8;
+  margin: 0 0 0.35rem 0;
+  line-height: 1.5;
 }
 
+.contactHighlight {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  font-weight: 600;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Contact Details Box */
 .contactDetails {
-  margin: 30px 0;
+  margin: 1.5rem 0 2rem 0;
   text-align: left;
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 6px;
-  border-left: 4px solid #ff9900;
+  background-color: #111827;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border-left: 4px solid #38bdf8;
+  border-top: 1px solid #1e293b;
+  border-right: 1px solid #1e293b;
+  border-bottom: 1px solid #1e293b;
 }
 
 .detailItem {
-  font: 400 1vmax "Roboto";
-  color: #333;
-  margin: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+  color: #cbd5e1;
+  margin: 0.85rem 0;
+}
+
+.detailItem:first-child {
+  margin-top: 0;
+}
+
+.detailItem:last-child {
+  margin-bottom: 0;
+}
+
+.detailIcon {
+  color: #38bdf8 !important;
+  font-size: 1.2rem !important;
+}
+
+.detailItem strong {
+  color: #f8fafc;
+}
+
+/* Action Buttons Container */
+.contactActions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
 }
 
 .mailBtn {
   text-decoration: none;
+  width: 100%;
 }
 
 .mailBtn button {
-  background-color: #ff9900 !important;
-  color: white !important;
-  font: 500 1vmax "Roboto" !important;
-  padding: 12px 25px !important;
-  border-radius: 4px !important;
-  transition: all 0.3s ease;
+  width: 100%;
+  background: linear-gradient(135deg, #0284c7 0%, #2563eb 100%) !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: 0.9rem !important;
+  font-weight: 600 !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 10px !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3) !important;
+  transition: all 0.2s ease !important;
 }
 
 .mailBtn button:hover {
-  background-color: #df8500 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4) !important;
 }
 
-/* Responsive adjustments for smaller screens */
+.copyEmailBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  background-color: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  color: #cbd5e1;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.copyEmailBtn:hover {
+  background-color: #1e293b;
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* Responsive Styles */
 @media screen and (max-width: 600px) {
-  .contactBox h1 {
-    font-size: 4vmax;
+  .contactBox {
+    padding: 1.5rem;
   }
-  .contactBox p, .detailItem, .mailBtn button {
-    font-size: 1.8vmax !important;
+  
+  .contactBox h1 {
+    font-size: 1.6rem;
+  }
+  
+  .contactSubtitle, 
+  .contactHighlight, 
+  .detailItem {
+    font-size: 0.85rem;
   }
 }

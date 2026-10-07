@@ -16,17 +16,16 @@ import Star from "@material-ui/icons/Star";
 import SideBar from "./Sidebar";
 import { DELETE_REVIEW_RESET } from "../../constants/productConstants";
 
-const ProductReviews = ({ history }) => {
+const ProductReviews = () => {
   const dispatch = useDispatch();
-
   const alert = useAlert();
 
   const { error: deleteError, isDeleted } = useSelector(
-    (state) => state.review
+    (state) => state.review || {}
   );
 
   const { error, reviews, loading } = useSelector(
-    (state) => state.productReviews
+    (state) => state.productReviews || {}
   );
 
   const [productId, setProductId] = useState("");
@@ -37,13 +36,12 @@ const ProductReviews = ({ history }) => {
 
   const productReviewsSubmitHandler = (e) => {
     e.preventDefault();
-    dispatch(getAllReviews(productId));
+    if (productId.trim()) {
+      dispatch(getAllReviews(productId));
+    }
   };
 
   useEffect(() => {
-    if (productId.length === 24) {
-      dispatch(getAllReviews(productId));
-    }
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -56,10 +54,13 @@ const ProductReviews = ({ history }) => {
 
     if (isDeleted) {
       alert.success("Review Deleted Successfully");
-      history.push("/admin/reviews");
       dispatch({ type: DELETE_REVIEW_RESET });
+      // Refresh reviews list after deletion
+      if (productId) {
+        dispatch(getAllReviews(productId));
+      }
     }
-  }, [dispatch, alert, error, deleteError, history, isDeleted, productId]);
+  }, [dispatch, alert, error, deleteError, isDeleted, productId]);
 
   const columns = [
     { field: "id", headerName: "Review ID", minWidth: 200, flex: 0.5 },
@@ -84,7 +85,6 @@ const ProductReviews = ({ history }) => {
       type: "number",
       minWidth: 180,
       flex: 0.4,
-
       cellClassName: (params) => {
         return params.getValue(params.id, "rating") >= 3
           ? "greenColor"
@@ -154,9 +154,7 @@ const ProductReviews = ({ history }) => {
             <Button
               id="createProductBtn"
               type="submit"
-              disabled={
-                loading ? true : false || productId === "" ? true : false
-              }
+              disabled={loading || productId === ""}
             >
               Search
             </Button>
@@ -172,7 +170,7 @@ const ProductReviews = ({ history }) => {
               autoHeight
             />
           ) : (
-            <h1 className="productReviewsFormHeading">No Reviews Found</h1>
+            <h1 className="noReviews">No Reviews Found</h1>
           )}
         </div>
       </div>

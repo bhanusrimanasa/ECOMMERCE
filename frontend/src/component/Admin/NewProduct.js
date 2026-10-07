@@ -14,6 +14,17 @@ import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
 
+// Default/legacy static categories
+const DEFAULT_CATEGORIES = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "Tops",
+  "Attire",
+  "Camera",
+  "SmartPhones",
+];
+
 const NewProduct = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -25,21 +36,36 @@ const NewProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
   const [Stock, setStock] = useState("");
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const categories = [
-    "Laptop",
-    "Footwear",
-    "Bottom",
-    "Tops",
-    "Attire",
-    "Camera",
-    "SmartPhones",
-  ];
-
   useEffect(() => {
+    // Fetch Admin-created categories and merge with default categories
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/v1/categories");
+        const data = await res.json();
+
+        let dbCatNames = [];
+        if (data.success && Array.isArray(data.categories)) {
+          dbCatNames = data.categories.map((c) => c.name);
+        }
+
+        // Merge defaults with DB categories without duplicates
+        const mergedCategories = Array.from(
+          new Set([...DEFAULT_CATEGORIES, ...dbCatNames])
+        );
+
+        setCategories(mergedCategories);
+      } catch (err) {
+        console.error("Failed to load categories from DB:", err);
+      }
+    };
+
+    fetchCategories();
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -144,7 +170,11 @@ const NewProduct = () => {
 
             <div className="inputField">
               <AccountTreeIcon />
-              <select value={category} onChange={(e) => setCategory(e.target.value)} required>
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
                 <option value="">Choose Category</option>
                 {categories.map((cate) => (
                   <option key={cate} value={cate}>

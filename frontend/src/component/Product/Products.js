@@ -10,7 +10,8 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import { useParams } from "react-router-dom";
 
-const categories = [
+// Default static categories
+const DEFAULT_CATEGORIES = [
   "Laptop",
   "Footwear",
   "Bottom",
@@ -28,6 +29,7 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [price, setPrice] = useState([0, 250000]);
   const [category, setCategory] = useState("");
+  const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
   const [ratings, setRatings] = useState(0);
 
   // Debounced states for background API calls
@@ -44,6 +46,31 @@ const Products = () => {
   } = useSelector((state) => state.products);
 
   const finalProducts = products?.products || products || [];
+
+  // Fetch Admin-created categories and merge with default list
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/v1/categories");
+        const data = await res.json();
+
+        let dbCatNames = [];
+        if (data.success && Array.isArray(data.categories)) {
+          dbCatNames = data.categories.map((c) => c.name);
+        }
+
+        const mergedCategories = Array.from(
+          new Set([...DEFAULT_CATEGORIES, ...dbCatNames])
+        );
+
+        setCategoriesList(mergedCategories);
+      } catch (err) {
+        console.error("Failed to fetch categories in Products page:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   // Debounce price slider
   useEffect(() => {
@@ -68,8 +95,19 @@ const Products = () => {
       dispatch(clearErrors());
     }
 
-    dispatch(getProduct(keyword, currentPage, debouncedPrice, category, debouncedRatings));
-  }, [dispatch, keyword, currentPage, debouncedPrice, category, debouncedRatings, alert, error]);
+    dispatch(
+      getProduct(keyword, currentPage, debouncedPrice, category, debouncedRatings)
+    );
+  }, [
+    dispatch,
+    keyword,
+    currentPage,
+    debouncedPrice,
+    category,
+    debouncedRatings,
+    alert,
+    error,
+  ]);
 
   const priceHandler = (event, newPrice) => {
     setPrice(newPrice);
@@ -119,7 +157,7 @@ const Products = () => {
             <div className="filterSection">
               <h4 className="filterSubHeading">Category</h4>
               <ul className="categoryBox">
-                {categories.map((cat) => (
+                {categoriesList.map((cat) => (
                   <li
                     className={`category-link ${
                       category === cat ? "activeCategory" : ""

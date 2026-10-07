@@ -1,0 +1,137 @@
+.agentDashboardContainer {
+  padding: 2rem;
+  min-height: 85vh;
+  background-color: #0f172a;
+  color: #f8fafc;
+  font-family: inherit;
+}
+
+.agentDashboardContainer h2 {
+  font-size: 1.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.subtitle {
+  color: #94a3b8;
+  margin-bottom: 2rem;
+}
+
+.noOrdersBox {
+  background-color: #1e293b;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #94a3b8;
+}
+
+.ordersGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.agentOrderCard {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.orderId {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #38bdf8;
+}
+
+.statusTag {
+  padding: 0.25rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: #475569;
+}
+
+.statusTag.delivered {
+  background-color: #16a34a;
+}
+
+.statusTag.out-for-delivery {
+  background-color: #d97706;
+}
+
+.statusTag.assigned {
+  background-color: #2563eb;
+}
+
+.statusTag.failed {
+  background-color: #dc2626;
+}
+
+.cardBody p {
+  font-size: 0.875rem;
+  color: #cbd5e1;
+  margin: 0.4rem 0;
+}
+
+.existingNotes {
+  color: #fbbf24 !important;
+  font-style: italic;
+}
+
+.cardControls {
+  margin-top: 1rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid #334155;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.cardControls label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.cardControls select,
+.cardControls input {
+  background-color: #0f172a;
+  border: 1px solid #475569;
+  color: #f8fafc;
+  padding: 0.5rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.cardControls button {
+  margin-top: 0.5rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cardControls button:hover {
+  background-color: #1d4ed8;
+}
+
+.cardControls button:disabled {
+  background-color: #475569;
+  cursor: not-allowed;
+}

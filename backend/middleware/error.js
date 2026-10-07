@@ -1,35 +1,46 @@
-const ErrorHandler = require("../utils/errorhander");
+const ErrorHander = require("../utils/errorhander");
 
 module.exports = (err, req, res, next) => {
-  err.statusCode = err.statusCode || 500;
-  err.message = err.message || "Internal Server Error";
+  let statusCode = err.statusCode || 500;
+  let message = err.message || "Internal Server Error";
 
-  // Wrong Mongodb Id error
+  // Log error in backend console for immediate debugging
+  console.error("ERROR 💥:", err);
+
+  // Wrong MongoDB Id error (Cast Error)
   if (err.name === "CastError") {
-    const message = `Resource not found. Invalid: ${err.path}`;
-    err = new ErrorHandler(message, 400);
+    message = `Resource not found. Invalid: ${err.path}`;
+    statusCode = 400;
   }
 
   // Mongoose duplicate key error
   if (err.code === 11000) {
-    const message = `Duplicate ${Object.keys(err.keyValue)} Entered`;
-    err = new ErrorHandler(message, 400);
+    message = `Duplicate ${Object.keys(err.keyValue)} Entered`;
+    statusCode = 400;
   }
 
   // Wrong JWT error
   if (err.name === "JsonWebTokenError") {
-    const message = `Json Web Token is invalid, Try again `;
-    err = new ErrorHandler(message, 400);
+    message = `Json Web Token is invalid, Try again`;
+    statusCode = 400;
   }
 
   // JWT EXPIRE error
   if (err.name === "TokenExpiredError") {
-    const message = `Json Web Token is Expired, Try again `;
-    err = new ErrorHandler(message, 400);
+    message = `Json Web Token is Expired, Try again`;
+    statusCode = 400;
   }
 
-  res.status(err.statusCode).json({
+  // Cloudinary / Upload errors
+  if (err.name === "Error" && message.includes("must supply api_key")) {
+    message = "Cloudinary config missing. Please check your config.env file.";
+    statusCode = 500;
+  }
+
+  res.status(statusCode).json({
     success: false,
-    message: err.message,
+    message: message,
+    // Helps you debug directly in development:
+    stack: process.env.NODE_ENV === "PRODUCTION" ? undefined : err.stack,
   });
 };
