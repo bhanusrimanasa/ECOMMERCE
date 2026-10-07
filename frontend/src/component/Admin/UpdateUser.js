@@ -14,10 +14,13 @@ import {
   clearErrors,
 } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
+import { useNavigate, useParams } from "react-router-dom";
 
-const UpdateUser = ({ history, match }) => {
+const UpdateUser = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
+  const { id: userId } = useParams();
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
 
@@ -31,16 +34,15 @@ const UpdateUser = ({ history, match }) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  const userId = match.params.id;
-
   useEffect(() => {
     if (user && user._id !== userId) {
       dispatch(getUserDetails(userId));
-    } else {
-      setName(user.name);
-      setEmail(user.email);
-      setRole(user.role);
+    } else if (user) {
+      setName(user.name || "");
+      setEmail(user.email || "");
+      setRole(user.role || "");
     }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -53,16 +55,15 @@ const UpdateUser = ({ history, match }) => {
 
     if (isUpdated) {
       alert.success("User Updated Successfully");
-      history.push("/admin/users");
+      navigate("/admin/users");
       dispatch({ type: UPDATE_USER_RESET });
     }
-  }, [dispatch, alert, error, history, isUpdated, updateError, user, userId]);
+  }, [dispatch, alert, error, navigate, isUpdated, updateError, user, userId]);
 
   const updateUserSubmitHandler = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
-
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("role", role);
@@ -112,6 +113,7 @@ const UpdateUser = ({ history, match }) => {
                   <option value="">Choose Role</option>
                   <option value="admin">Admin</option>
                   <option value="user">User</option>
+                  <option value="deliveryAgent">Delivery Agent</option>
                 </select>
               </div>
 

@@ -37,7 +37,7 @@ const CategoryList = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // Ensures auth cookie/session token is sent
+        credentials: "include",
         body: JSON.stringify({ name: newCategory.trim() }),
       });
 

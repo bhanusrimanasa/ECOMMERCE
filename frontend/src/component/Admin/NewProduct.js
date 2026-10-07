@@ -14,7 +14,6 @@ import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
 
-// Default/legacy static categories
 const DEFAULT_CATEGORIES = [
   "Laptop",
   "Footwear",
@@ -42,7 +41,6 @@ const NewProduct = () => {
   const [imagesPreview, setImagesPreview] = useState([]);
 
   useEffect(() => {
-    // Fetch Admin-created categories and merge with default categories
     const fetchCategories = async () => {
       try {
         const res = await fetch("/api/v1/categories");
@@ -53,7 +51,6 @@ const NewProduct = () => {
           dbCatNames = data.categories.map((c) => c.name);
         }
 
-        // Merge defaults with DB categories without duplicates
         const mergedCategories = Array.from(
           new Set([...DEFAULT_CATEGORIES, ...dbCatNames])
         );
@@ -96,7 +93,6 @@ const NewProduct = () => {
     dispatch(createProduct(myForm));
   };
 
-  // Append new images to state without clearing existing ones
   const createProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
@@ -116,7 +112,6 @@ const NewProduct = () => {
     });
   };
 
-  // Remove individual selected image from array
   const removeImage = (indexToRemove) => {
     setImagesPreview((old) => old.filter((_, index) => index !== indexToRemove));
     setImages((old) => old.filter((_, index) => index !== indexToRemove));
@@ -210,7 +205,6 @@ const NewProduct = () => {
               />
             </div>
 
-            {/* Selected Images Grid with Removal Option */}
             {imagesPreview.length > 0 && (
               <div id="createProductFormImage">
                 {imagesPreview.map((image, index) => (

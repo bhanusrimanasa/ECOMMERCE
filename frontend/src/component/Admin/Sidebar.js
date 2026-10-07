@@ -14,11 +14,11 @@ import RateReviewIcon from "@material-ui/icons/RateReview";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import CategoryIcon from "@material-ui/icons/Category";
 
-const Sidebar = ({ sidebarWidth, setSidebarWidth }) => {
+const Sidebar = ({ sidebarWidth = 240, setSidebarWidth }) => {
   const location = useLocation();
 
-  // Mouse drag handler for manual resizing
   const handleMouseDown = (e) => {
+    if (!setSidebarWidth) return;
     e.preventDefault();
     const startX = e.clientX;
     const startWidth = sidebarWidth;
@@ -41,17 +41,14 @@ const Sidebar = ({ sidebarWidth, setSidebarWidth }) => {
 
   return (
     <aside className="sidebar" style={{ width: `${sidebarWidth}px` }}>
-      {/* Resizer Drag Handle */}
       <div className="resizerHandle" onMouseDown={handleMouseDown} title="Drag to resize sidebar" />
 
-      {/* Brand Logo */}
       <div className="sidebarLogoContainer">
         <Link to="/" className="sidebarLogoLink">
           <img src={logo} alt="Logo" className="sidebarLogo" />
         </Link>
       </div>
 
-      {/* Navigation Links */}
       <nav className="sidebarNav">
         <Link
           to="/admin/dashboard"

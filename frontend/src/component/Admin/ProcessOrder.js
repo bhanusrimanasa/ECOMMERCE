@@ -19,7 +19,7 @@ import axios from "axios";
 import "./processOrder.css";
 
 const ProcessOrder = () => {
-  const { id } = useParams(); // Fixed: Using useParams instead of match.params
+  const { id } = useParams();
   const dispatch = useDispatch();
   const alert = useAlert();
 
@@ -37,7 +37,7 @@ const ProcessOrder = () => {
     const fetchAgents = async () => {
       try {
         const { data } = await axios.get("/api/v1/admin/users");
-        const deliveryAgents = data.users.filter((u) => u.role === "deliveryAgent");
+        const deliveryAgents = data.users?.filter((u) => u.role === "deliveryAgent") || [];
         setAgents(deliveryAgents);
       } catch (err) {
         console.error("Failed to fetch delivery agents", err);
@@ -47,7 +47,7 @@ const ProcessOrder = () => {
   }, []);
 
   useEffect(() => {
-    if (order && order.assignedAgent) {
+    if (order?.assignedAgent) {
       setSelectedAgent(order.assignedAgent._id || order.assignedAgent);
     }
   }, [order]);
@@ -115,13 +115,11 @@ const ProcessOrder = () => {
                   <div className="orderDetailsContainerBox">
                     <div>
                       <p>Name:</p>
-                      <span>{order.user && order.user.name}</span>
+                      <span>{order.user?.name}</span>
                     </div>
                     <div>
                       <p>Phone:</p>
-                      <span>
-                        {order.shippingInfo && order.shippingInfo.phoneNo}
-                      </span>
+                      <span>{order.shippingInfo?.phoneNo}</span>
                     </div>
                     <div>
                       <p>Address:</p>
@@ -137,14 +135,12 @@ const ProcessOrder = () => {
                     <div>
                       <p
                         className={
-                          order.paymentInfo &&
-                          order.paymentInfo.status === "succeeded"
+                          order.paymentInfo?.status === "succeeded"
                             ? "greenColor"
                             : "redColor"
                         }
                       >
-                        {order.paymentInfo &&
-                        order.paymentInfo.status === "succeeded"
+                        {order.paymentInfo?.status === "succeeded"
                           ? "PAID"
                           : "NOT PAID"}
                       </p>
@@ -152,7 +148,7 @@ const ProcessOrder = () => {
 
                     <div>
                       <p>Amount:</p>
-                      <span>{order.totalPrice && order.totalPrice}</span>
+                      <span>₹{order.totalPrice?.toLocaleString()}</span>
                     </div>
                   </div>
 
@@ -161,12 +157,12 @@ const ProcessOrder = () => {
                     <div>
                       <p
                         className={
-                          order.orderStatus && order.orderStatus === "Delivered"
+                          order.orderStatus === "Delivered"
                             ? "greenColor"
                             : "redColor"
                         }
                       >
-                        {order.orderStatus && order.orderStatus}
+                        {order.orderStatus}
                       </p>
                     </div>
                     <div>
@@ -185,19 +181,18 @@ const ProcessOrder = () => {
                 <div className="confirmCartItems">
                   <Typography>Your Cart Items:</Typography>
                   <div className="confirmCartItemsContainer">
-                    {order.orderItems &&
-                      order.orderItems.map((item) => (
-                        <div key={item.product}>
-                          <img src={item.image} alt="Product" />
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>{" "}
-                          <span>
-                            {item.quantity} X ₹{item.price} ={" "}
-                            <b>₹{item.price * item.quantity}</b>
-                          </span>
-                        </div>
-                      ))}
+                    {order.orderItems?.map((item) => (
+                      <div key={item.product}>
+                        <img src={item.image} alt="Product" />
+                        <Link to={`/product/${item.product}`}>
+                          {item.name}
+                        </Link>{" "}
+                        <span>
+                          {item.quantity} X ₹{item.price} ={" "}
+                          <b>₹{item.price * item.quantity}</b>
+                        </span>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -247,7 +242,7 @@ const ProcessOrder = () => {
                   <div>
                     <AccountTreeIcon />
                     <select onChange={(e) => setStatus(e.target.value)}>
-                      <option value="">Choose Category</option>
+                      <option value="">Choose Status</option>
                       {order.orderStatus === "Processing" && (
                         <option value="Shipped">Shipped</option>
                       )}
