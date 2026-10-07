@@ -4,7 +4,6 @@ module.exports = (err, req, res, next) => {
   let statusCode = err.statusCode || 500;
   let message = err.message || "Internal Server Error";
 
-  // Log error in backend console for immediate debugging
   console.error("ERROR 💥:", err);
 
   // Wrong MongoDB Id error (Cast Error)
@@ -16,6 +15,14 @@ module.exports = (err, req, res, next) => {
   // Mongoose duplicate key error
   if (err.code === 11000) {
     message = `Duplicate ${Object.keys(err.keyValue)} Entered`;
+    statusCode = 400;
+  }
+
+  // Mongoose Validation Error
+  if (err.name === "ValidationError") {
+    message = Object.values(err.errors)
+      .map((val) => val.message)
+      .join(", ");
     statusCode = 400;
   }
 
@@ -40,7 +47,6 @@ module.exports = (err, req, res, next) => {
   res.status(statusCode).json({
     success: false,
     message: message,
-    // Helps you debug directly in development:
-    stack: process.env.NODE_ENV === "PRODUCTION" ? undefined : err.stack,
+    stack: process.env.NODE_ENV === "production" ? undefined : err.stack,
   });
 };
