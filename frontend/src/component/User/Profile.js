@@ -15,6 +15,14 @@ const Profile = () => {
     }
   }, [navigate, isAuthenticated]);
 
+  const formattedDate = user?.createdAt
+    ? new Date(user.createdAt).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : "N/A";
+
   return (
     <Fragment>
       {loading ? (
@@ -28,7 +36,7 @@ const Profile = () => {
               <h1>My Profile</h1>
               <img
                 src={user?.avatar?.url || "/Profile.png"}
-                alt={user?.name || "User"}
+                alt={user?.name || "User Profile"}
               />
               <Link to="/me/update">Edit Profile</Link>
             </div>
@@ -47,7 +55,7 @@ const Profile = () => {
 
               <div className="infoBlock">
                 <h4>Joined On</h4>
-                <p>{user?.createdAt ? String(user.createdAt).substr(0, 10) : "N/A"}</p>
+                <p>{formattedDate}</p>
               </div>
 
               <div className="profileActions">

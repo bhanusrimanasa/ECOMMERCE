@@ -68,7 +68,7 @@ const LoginSignUp = () => {
         reader.onload = () => {
           if (reader.readyState === 2) {
             setAvatarPreview(reader.result);
-            setAvatar(reader.result); // Sets the full valid Base64 string
+            setAvatar(reader.result);
           }
         };
 
@@ -79,13 +79,7 @@ const LoginSignUp = () => {
     }
   };
 
-  const getRedirectPath = () => {
-    if (!location.search) return "/";
-    const path = location.search.split("=")[1];
-    return path.startsWith("/") ? path : `/${path}`;
-  };
-
-  const redirect = getRedirectPath();
+  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (error) {
@@ -98,7 +92,7 @@ const LoginSignUp = () => {
     }
   }, [dispatch, error, alert, navigate, isAuthenticated, redirect]);
 
-  const switchTabs = (e, tab) => {
+  const switchTabs = (tab) => {
     if (tab === "login") {
       switcherTab.current.classList.add("shiftToNeutral");
       switcherTab.current.classList.remove("shiftToRight");
@@ -125,8 +119,8 @@ const LoginSignUp = () => {
             <div className="LoginSignUpBox">
               <div>
                 <div className="login_signUp_toggle">
-                  <p onClick={(e) => switchTabs(e, "login")}>LOGIN</p>
-                  <p onClick={(e) => switchTabs(e, "register")}>REGISTER</p>
+                  <p onClick={() => switchTabs("login")}>LOGIN</p>
+                  <p onClick={() => switchTabs("register")}>REGISTER</p>
                 </div>
                 <button ref={switcherTab} className="switcherBtn"></button>
               </div>

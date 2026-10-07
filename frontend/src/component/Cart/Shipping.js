@@ -30,7 +30,7 @@ const Shipping = () => {
   const shippingSubmit = (e) => {
     e.preventDefault();
 
-    if (phoneNo.length !== 10) {
+    if (String(phoneNo).length !== 10) {
       alert.error("Phone Number should be 10 digits long");
       return;
     }
@@ -106,7 +106,7 @@ const Shipping = () => {
                 value={country}
                 onChange={(e) => {
                   setCountry(e.target.value);
-                  setState(""); // Reset state selection on country change
+                  setState("");
                 }}
               >
                 <option value="">Select Country</option>

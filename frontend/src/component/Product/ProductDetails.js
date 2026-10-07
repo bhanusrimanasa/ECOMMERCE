@@ -8,7 +8,7 @@ import {
   getProductDetails,
   newReview,
 } from "../../actions/productAction";
-import ReviewCard from "./ReviewCard.js";
+import ReviewCard from "./ReviewCard";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
@@ -38,7 +38,7 @@ const ProductDetails = () => {
 
   const options = {
     size: "large",
-    value: product && product.ratings ? product.ratings : 0,
+    value: product?.ratings || 0,
     readOnly: true,
     precision: 0.5,
   };
@@ -49,12 +49,12 @@ const ProductDetails = () => {
   const [comment, setComment] = useState("");
 
   const increaseQuantity = () => {
-    if (product.Stock <= quantity) return;
+    if (product?.Stock <= quantity) return;
     setQuantity((prev) => prev + 1);
   };
 
   const decreaseQuantity = () => {
-    if (1 >= quantity) return;
+    if (quantity <= 1) return;
     setQuantity((prev) => prev - 1);
   };
 
@@ -92,20 +92,21 @@ const ProductDetails = () => {
       alert.success("Review Submitted Successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
+
     dispatch(getProductDetails(id));
   }, [dispatch, id, error, alert, reviewError, success]);
 
   return (
     <Fragment>
-      {loading ? (
+      {loading || !product ? (
         <Loader />
       ) : (
         <Fragment>
           <MetaData title={`${product.name || "Product Details"} -- STORE`} />
-          
+
           <main className="productDetailsContainer">
             <div className="ProductDetails">
-              {/* Image Carousel Block */}
+              {/* Carousel */}
               <div className="carouselWrapper">
                 <Carousel
                   indicatorIconButtonProps={{
@@ -119,31 +120,31 @@ const ProductDetails = () => {
                     product.images.map((item, i) => (
                       <img
                         className="CarouselImage"
-                        key={i}
+                        key={item.url || i}
                         src={item.url}
-                        alt={`${i} Slide`}
+                        alt={`Slide ${i}`}
                       />
                     ))}
                 </Carousel>
               </div>
 
-              {/* Product Info Block */}
+              {/* Product Info */}
               <div className="productInfo">
                 <div className="detailsBlock-1">
                   <h2>{product.name}</h2>
-                 
                 </div>
 
                 <div className="detailsBlock-2">
-                  {product._id && <Rating {...options} />}
+                  <Rating {...options} />
                   <span className="detailsBlock-2-span">
-                    ({product.numOfReviews} {product.numOfReviews === 1 ? "Review" : "Reviews"})
+                    ({product.numOfReviews || 0}{" "}
+                    {product.numOfReviews === 1 ? "Review" : "Reviews"})
                   </span>
                 </div>
 
                 <div className="detailsBlock-3">
                   <h1>{`₹${product.price}`}</h1>
-                  
+
                   <div className="detailsBlock-3-1">
                     <div className="detailsBlock-3-1-1">
                       <button onClick={decreaseQuantity}>-</button>
@@ -178,7 +179,7 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Reviews Section */}
+            {/* Customer Reviews */}
             <section className="reviewsSection">
               <h3 className="reviewsHeading">Customer Reviews</h3>
 
@@ -189,12 +190,14 @@ const ProductDetails = () => {
                   ))}
                 </div>
               ) : (
-                <p className="noReviews">No reviews yet. Be the first to share your thoughts!</p>
+                <p className="noReviews">
+                  No reviews yet. Be the first to share your thoughts!
+                </p>
               )}
             </section>
           </main>
 
-          {/* Review Dialog Modal */}
+          {/* Review Dialog */}
           <Dialog
             aria-labelledby="submit-dialog-title"
             open={open}

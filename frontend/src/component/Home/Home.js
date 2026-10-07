@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from "react";
 import "./Home.css";
-import ProductCard from "./ProductCard.js";
+import ProductCard from "./ProductCard";
 import MetaData from "../layout/MetaData";
 import { clearErrors, getProduct } from "../../actions/productAction";
 import { useSelector, useDispatch } from "react-redux";
@@ -20,6 +20,10 @@ const Home = () => {
     dispatch(getProduct());
   }, [dispatch, error, alert]);
 
+  const productList = Array.isArray(products)
+    ? products
+    : products?.products || [];
+
   return (
     <Fragment>
       {loading ? (
@@ -28,26 +32,29 @@ const Home = () => {
         <Fragment>
           <MetaData title="STORE" />
 
-          {/* Clean Hero Header */}
+          {/* Hero Section */}
           <section className="hero">
-            <h1>Essential Quality.<br />Everyday Luxury.</h1>
+            <h1>
+              Essential Quality.
+              <br />
+              Everyday Luxury.
+            </h1>
             <p>Explore our latest arrivals crafted for modern living.</p>
             <a href="#container" className="heroBtn">
               Shop Collection &darr;
             </a>
           </section>
 
-          {/* Uncluttered Product Section */}
+          {/* Product Section */}
           <main className="mainContent">
             <div className="sectionHeader">
               <h2>Featured Products</h2>
             </div>
 
             <div className="container" id="container">
-              {products &&
-                products.map((product) => (
-                  <ProductCard key={product._id} product={product} />
-                ))}
+              {productList.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
             </div>
           </main>
         </Fragment>

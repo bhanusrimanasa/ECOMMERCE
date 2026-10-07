@@ -2,7 +2,6 @@ import React, { Fragment, useEffect, useState } from "react";
 import "./Products.css";
 import { useSelector, useDispatch } from "react-redux";
 import { clearErrors, getProduct } from "../../actions/productAction";
-import Loader from "../layout/Loader/Loader";
 import ProductCard from "../Home/ProductCard";
 import Pagination from "react-js-pagination";
 import Slider from "@material-ui/core/Slider";
@@ -10,7 +9,6 @@ import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
 import { useParams } from "react-router-dom";
 
-// Default static categories
 const DEFAULT_CATEGORIES = [
   "Laptop",
   "Footwear",
@@ -32,7 +30,6 @@ const Products = () => {
   const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
   const [ratings, setRatings] = useState(0);
 
-  // Debounced states for background API calls
   const [debouncedPrice, setDebouncedPrice] = useState([0, 250000]);
   const [debouncedRatings, setDebouncedRatings] = useState(0);
 
@@ -45,9 +42,11 @@ const Products = () => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
-  const finalProducts = products?.products || products || [];
+  const finalProducts = Array.isArray(products)
+    ? products
+    : products?.products || [];
 
-  // Fetch Admin-created categories and merge with default list
+  // Fetch Admin Categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -65,7 +64,7 @@ const Products = () => {
 
         setCategoriesList(mergedCategories);
       } catch (err) {
-        console.error("Failed to fetch categories in Products page:", err);
+        console.error("Failed to fetch categories:", err);
       }
     };
 
@@ -88,7 +87,7 @@ const Products = () => {
     return () => clearTimeout(timer);
   }, [ratings]);
 
-  // Trigger dispatch only on debounced changes
+  // Fetch Products on filter change
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -185,7 +184,7 @@ const Products = () => {
             </div>
           </aside>
 
-          {/* Product Grid with Inline Loading Overlay */}
+          {/* Product Grid */}
           <main className={`products ${loading ? "productsUpdating" : ""}`}>
             {finalProducts && finalProducts.length > 0 ? (
               finalProducts.map((product) => (
@@ -208,14 +207,14 @@ const Products = () => {
           </main>
         </div>
 
-        {/* Pagination Controls */}
+        {/* Pagination */}
         {resultPerPage < filteredProductsCount && (
           <div className="paginationBox">
             <Pagination
               activePage={currentPage}
               itemsCountPerPage={resultPerPage}
-              totalItemsCount={productsCount}
-              onChange={(e) => setCurrentPage(e)}
+              totalItemsCount={productsCount || 0}
+              onChange={(pageNumber) => setCurrentPage(pageNumber)}
               nextPageText="Next"
               prevPageText="Prev"
               firstPageText="First"

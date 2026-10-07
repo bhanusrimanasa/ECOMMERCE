@@ -46,7 +46,6 @@ const Payment = () => {
     totalPrice: orderInfo?.totalPrice,
   };
 
-  // Custom styling passed into Stripe Element inputs
   const stripeElementOptions = {
     style: {
       base: {
@@ -66,7 +65,7 @@ const Payment = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
 
-    payBtn.current.disabled = true;
+    if (payBtn.current) payBtn.current.disabled = true;
 
     try {
       const config = {
@@ -88,21 +87,21 @@ const Payment = () => {
         payment_method: {
           card: elements.getElement(CardNumberElement),
           billing_details: {
-            name: user.name,
-            email: user.email,
+            name: user?.name,
+            email: user?.email,
             address: {
-              line1: shippingInfo.address,
-              city: shippingInfo.city,
-              state: shippingInfo.state,
-              postal_code: shippingInfo.pinCode,
-              country: shippingInfo.country,
+              line1: shippingInfo?.address,
+              city: shippingInfo?.city,
+              state: shippingInfo?.state,
+              postal_code: shippingInfo?.pinCode,
+              country: shippingInfo?.country,
             },
           },
         },
       });
 
       if (result.error) {
-        payBtn.current.disabled = false;
+        if (payBtn.current) payBtn.current.disabled = false;
         alert.error(result.error.message);
       } else {
         if (result.paymentIntent.status === "succeeded") {
@@ -114,12 +113,13 @@ const Payment = () => {
           dispatch(createOrder(order));
           navigate("/success");
         } else {
-          alert.error("There's some issue while processing payment");
+          if (payBtn.current) payBtn.current.disabled = false;
+          alert.error("There was an issue processing your payment");
         }
       }
-    } catch (error) {
-      payBtn.current.disabled = false;
-      alert.error(error.response?.data?.message || "Payment Process Error");
+    } catch (err) {
+      if (payBtn.current) payBtn.current.disabled = false;
+      alert.error(err.response?.data?.message || "Payment Process Error");
     }
   };
 

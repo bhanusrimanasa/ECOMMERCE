@@ -7,18 +7,18 @@ const ProtectedRoute = ({ children, isAdmin, isAgent }) => {
   const { loading, isAuthenticated, user } = useSelector((state) => state.user);
 
   if (loading) {
-    return React.createElement(Loader, null);
+    return <Loader />;
   }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  if (isAdmin === true && user && user.role !== "admin") {
+  if (isAdmin && user?.role !== "admin") {
     return <Navigate to="/login" replace />;
   }
 
-  if (isAgent === true && user && user.role !== "deliveryAgent" && user.role !== "admin") {
+  if (isAgent && user?.role !== "deliveryAgent" && user?.role !== "admin") {
     return <Navigate to="/login" replace />;
   }
 
