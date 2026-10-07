@@ -8,13 +8,13 @@ const cors = require("cors");
 
 // Config
 if (process.env.NODE_ENV !== "PRODUCTION") {
-  require("dotenv").config({ path: "config/config.env" });
+  require("dotenv").config({ path: path.join(__dirname, "config", "config.env") });
 }
 
 // CORS Configuration
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true,
   })
 );
@@ -23,7 +23,7 @@ app.use(
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
 
 // Route Imports
 const product = require("./routes/productRoute");
@@ -46,7 +46,7 @@ if (process.env.NODE_ENV === "PRODUCTION") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../frontend/build/index.html"));
+    res.sendFile(path.resolve(__dirname, "../frontend/build", "index.html"));
   });
 }
 

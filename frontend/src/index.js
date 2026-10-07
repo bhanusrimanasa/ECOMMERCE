@@ -13,13 +13,9 @@ const options = {
   transition: transitions.SCALE,
 };
 
-// Target the root div element in your public/index.html
 const container = document.getElementById("root");
-
-// Create the React 18 root
 const root = createRoot(container);
 
-// Render your application using the new concurrent root API
 root.render(
   <Provider store={store}>
     <AlertProvider template={AlertTemplate} {...options}>

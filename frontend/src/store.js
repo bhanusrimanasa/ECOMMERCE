@@ -1,5 +1,4 @@
-import { legacy_createStore as createStore, combineReducers, applyMiddleware, compose } from "redux";
-import thunk from "redux-thunk";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   newProductReducer,
   newReviewReducer,
@@ -29,7 +28,7 @@ import {
   deliveryProcessReducer,
 } from "./reducers/orderReducer";
 
-const reducer = combineReducers({
+const reducer = {
   products: productsReducer,
   productDetails: productDetailsReducer,
   user: userReducer,
@@ -48,28 +47,26 @@ const reducer = combineReducers({
   userDetails: userDetailsReducer,
   productReviews: productReviewsReducer,
   review: reviewReducer,
-  // Delivery Agent Reducers
   agentOrders: agentOrdersReducer,
   deliveryProcess: deliveryProcessReducer,
-});
+};
 
-// Cart and shipping info are now hydrated from MongoDB upon user login
-let initialState = {
+const preloadedState = {
   cart: {
-    cartItems: [],
-    shippingInfo: {},
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
+    shippingInfo: localStorage.getItem("shippingInfo")
+      ? JSON.parse(localStorage.getItem("shippingInfo"))
+      : {},
   },
 };
 
-const middleware = [thunk];
-
-// Safely connects to the browser's Redux DevTools extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-const store = createStore(
+const store = configureStore({
   reducer,
-  initialState,
-  composeEnhancers(applyMiddleware(...middleware))
-);
+  preloadedState,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
+  devTools: process.env.NODE_ENV !== "production",
+});
 
 export default store;
