@@ -31,13 +31,15 @@ const ProductReviews = () => {
   const [productId, setProductId] = useState("");
 
   const deleteReviewHandler = (reviewId) => {
-    dispatch(deleteReviews(reviewId, productId));
+    if (window.confirm("Are you sure you want to delete this review?")) {
+      dispatch(deleteReviews(reviewId, productId));
+    }
   };
 
   const productReviewsSubmitHandler = (e) => {
     e.preventDefault();
     if (productId.trim()) {
-      dispatch(getAllReviews(productId));
+      dispatch(getAllReviews(productId.trim()));
     }
   };
 
@@ -55,9 +57,8 @@ const ProductReviews = () => {
     if (isDeleted) {
       alert.success("Review Deleted Successfully");
       dispatch({ type: DELETE_REVIEW_RESET });
-      // Refresh reviews list after deletion
       if (productId) {
-        dispatch(getAllReviews(productId));
+        dispatch(getAllReviews(productId.trim()));
       }
     }
   }, [dispatch, alert, error, deleteError, isDeleted, productId]);
@@ -86,9 +87,7 @@ const ProductReviews = () => {
       minWidth: 180,
       flex: 0.4,
       cellClassName: (params) => {
-        return params.getValue(params.id, "rating") >= 3
-          ? "greenColor"
-          : "redColor";
+        return params.row.rating >= 3 ? "greenColor" : "redColor";
       },
     },
 
@@ -97,16 +96,11 @@ const ProductReviews = () => {
       flex: 0.3,
       headerName: "Actions",
       minWidth: 150,
-      type: "number",
       sortable: false,
       renderCell: (params) => {
         return (
           <Fragment>
-            <Button
-              onClick={() =>
-                deleteReviewHandler(params.getValue(params.id, "id"))
-              }
-            >
+            <Button onClick={() => deleteReviewHandler(params.row.id)}>
               <DeleteIcon />
             </Button>
           </Fragment>
@@ -117,19 +111,18 @@ const ProductReviews = () => {
 
   const rows = [];
 
-  reviews &&
-    reviews.forEach((item) => {
-      rows.push({
-        id: item._id,
-        rating: item.rating,
-        comment: item.comment,
-        user: item.name,
-      });
+  reviews?.forEach((item) => {
+    rows.push({
+      id: item._id,
+      rating: item.rating,
+      comment: item.comment,
+      user: item.name,
     });
+  });
 
   return (
     <Fragment>
-      <MetaData title={`ALL REVIEWS - Admin`} />
+      <MetaData title="ALL REVIEWS - Admin" />
 
       <div className="dashboard">
         <SideBar />

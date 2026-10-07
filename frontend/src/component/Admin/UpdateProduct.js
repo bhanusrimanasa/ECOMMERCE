@@ -13,6 +13,16 @@ import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate, useParams } from "react-router-dom";
 import "./updateProduct.css";
 
+const DEFAULT_CATEGORIES = [
+  "Laptop",
+  "Footwear",
+  "Bottom",
+  "Tops",
+  "Attire",
+  "Camera",
+  "SmartPhones",
+];
+
 const UpdateProduct = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -32,32 +42,39 @@ const UpdateProduct = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
   const [Stock, setStock] = useState("");
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
 
-  const categories = [
-    "Laptop",
-    "Footwear",
-    "Bottom",
-    "Tops",
-    "Attire",
-    "Camera",
-    "SmartPhones",
-  ];
-
   const productId = id;
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await fetch("/api/v1/categories");
+        const data = await res.json();
+        if (data.success && Array.isArray(data.categories)) {
+          const dbCatNames = data.categories.map((c) => c.name);
+          setCategories(Array.from(new Set([...DEFAULT_CATEGORIES, ...dbCatNames])));
+        }
+      } catch (err) {
+        console.error("Failed to fetch categories:", err);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     if (product && product._id !== productId) {
       dispatch(getProductDetails(productId));
     } else if (product) {
-      setName(product.name);
-      setDescription(product.description);
-      setPrice(product.price);
-      setCategory(product.category);
-      setStock(product.Stock);
+      setName(product.name || "");
+      setDescription(product.description || "");
+      setPrice(product.price || "");
+      setCategory(product.category || "");
+      setStock(product.Stock || "");
       setOldImages(product.images || []);
     }
 
@@ -97,12 +114,10 @@ const UpdateProduct = () => {
     myForm.set("category", category);
     myForm.set("Stock", Stock);
 
-    // Append newly uploaded images array
     images.forEach((image) => {
       myForm.append("images", image);
     });
 
-    // Send remaining existing old images array (if backend handles retaining old images)
     oldImages.forEach((img) => {
       myForm.append("oldImages", JSON.stringify(img));
     });
@@ -110,7 +125,6 @@ const UpdateProduct = () => {
     dispatch(updateProduct(productId, myForm));
   };
 
-  // Handles adding new file images
   const updateProductImagesChange = (e) => {
     const files = Array.from(e.target.files);
 
@@ -128,12 +142,10 @@ const UpdateProduct = () => {
     });
   };
 
-  // Remove individual existing image
   const removeOldImage = (indexToRemove) => {
     setOldImages((old) => old.filter((_, index) => index !== indexToRemove));
   };
 
-  // Remove individual newly added image
   const removeNewImage = (indexToRemove) => {
     setImagesPreview((old) => old.filter((_, index) => index !== indexToRemove));
     setImages((old) => old.filter((_, index) => index !== indexToRemove));
@@ -213,7 +225,6 @@ const UpdateProduct = () => {
                 ></textarea>
               </div>
 
-              {/* Upload Input */}
               <div className="fieldGroup">
                 <label>Add New Images</label>
                 <div className="customUploadArea">
@@ -223,7 +234,7 @@ const UpdateProduct = () => {
                   <span className="fileCount">
                     {images.length > 0
                       ? `${images.length} new image(s) selected`
-                      : "Select image files to add to array"}
+                      : "Select image files to add"}
                   </span>
                   <input
                     id="fileInput"
@@ -237,7 +248,6 @@ const UpdateProduct = () => {
                 </div>
               </div>
 
-              {/* Current Images Gallery with Delete Action */}
               {oldImages && oldImages.length > 0 && (
                 <div className="imageGallerySection">
                   <span className="sectionLabel">Current Product Images ({oldImages.length})</span>
@@ -260,7 +270,6 @@ const UpdateProduct = () => {
                 </div>
               )}
 
-              {/* New Selected Images Gallery with Delete Action */}
               {imagesPreview.length > 0 && (
                 <div className="imageGallerySection">
                   <span className="sectionLabel">New Uploads To Add ({imagesPreview.length})</span>
