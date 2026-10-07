@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useAlert } from "react-alert";
 import {
   getAgentOrders,
   updateDeliveryStatus,
@@ -7,14 +8,16 @@ import {
 } from "../../actions/orderAction";
 import { UPDATE_DELIVERY_RESET } from "../../constants/orderConstants";
 import Loader from "../layout/Loader/Loader";
+import MetaData from "../layout/MetaData";
 import "./AgentDashboard.css";
 
 const AgentDashboard = () => {
   const dispatch = useDispatch();
+  const alert = useAlert();
 
   const { orders, loading, error } = useSelector((state) => state.agentOrders);
   const { isUpdated, error: updateError, loading: updateLoading } = useSelector(
-    (state) => state.deliveryProcess
+    (state) => state.deliveryProcess || {}
   );
 
   const [statusMap, setStatusMap] = useState({});
@@ -22,23 +25,23 @@ const AgentDashboard = () => {
 
   useEffect(() => {
     if (error) {
-      alert(error);
+      alert.error(error);
       dispatch(clearErrors());
     }
 
     if (updateError) {
-      alert(updateError);
+      alert.error(updateError);
       dispatch(clearErrors());
     }
 
     if (isUpdated) {
-      alert("Delivery status updated successfully!");
+      alert.success("Delivery status updated successfully!");
       dispatch({ type: UPDATE_DELIVERY_RESET });
       dispatch(getAgentOrders());
     } else {
       dispatch(getAgentOrders());
     }
-  }, [dispatch, error, updateError, isUpdated]);
+  }, [dispatch, alert, error, updateError, isUpdated]);
 
   const handleStatusChange = (orderId, value) => {
     setStatusMap((prev) => ({ ...prev, [orderId]: value }));
@@ -66,6 +69,7 @@ const AgentDashboard = () => {
 
   return (
     <div className="agentDashboardContainer">
+      <MetaData title="Delivery Agent Portal" />
       <h2>🚚 Delivery Agent Portal</h2>
       <p className="subtitle">Manage and update your assigned deliveries</p>
 
@@ -99,7 +103,7 @@ const AgentDashboard = () => {
                     <strong>Email:</strong> {order.user?.email || "N/A"}
                   </p>
                   <p>
-                    <strong>Phone:</strong> {order.shippingInfo?.phoneNo}
+                    <strong>Phone:</strong> {order.shippingInfo?.phoneNo || "N/A"}
                   </p>
                   <p>
                     <strong>Address:</strong> {order.shippingInfo?.address},{" "}
@@ -107,7 +111,8 @@ const AgentDashboard = () => {
                     {order.shippingInfo?.pinCode}
                   </p>
                   <p>
-                    <strong>Total Amount:</strong> ₹{order.totalPrice}
+                    <strong>Total Amount:</strong> ₹
+                    {order.totalPrice ? order.totalPrice.toLocaleString() : 0}
                   </p>
                   {order.deliveryNotes && (
                     <p className="existingNotes">
