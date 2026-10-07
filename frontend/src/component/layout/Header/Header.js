@@ -13,10 +13,30 @@ const Header = () => {
         </Link>
 
         <nav className="headerNav">
-          <NavLink to="/" exact activeClassName="activeLink">Home</NavLink>
-          <NavLink to="/products" activeClassName="activeLink">Products</NavLink>
-          <NavLink to="/about" activeClassName="activeLink">About</NavLink>
-          <NavLink to="/contact" activeClassName="activeLink">Contact</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "activeLink" : "")}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/products"
+            className={({ isActive }) => (isActive ? "activeLink" : "")}
+          >
+            Products
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) => (isActive ? "activeLink" : "")}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={({ isActive }) => (isActive ? "activeLink" : "")}
+          >
+            Contact
+          </NavLink>
         </nav>
 
         <div className="headerIcons">

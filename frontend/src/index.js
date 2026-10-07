@@ -18,7 +18,12 @@ const root = createRoot(container);
 
 root.render(
   <Provider store={store}>
-    <AlertProvider template={AlertTemplate} {...options}>
+    <AlertProvider 
+      template={AlertTemplate} 
+      timeout={options.timeout} 
+      position={options.position} 
+      transition={options.transition}
+    >
       <App />
     </AlertProvider>
   </Provider>
