@@ -1,18 +1,18 @@
 const Category = require("../models/categoryModel");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const ErrorHandler = require("../utils/errorhander");
+const ErrorHander = require("../utils/errorhander");
 
 // 1. Create New Category (Admin)
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
   const { name } = req.body;
 
   if (!name) {
-    return next(new ErrorHandler("Category name is required", 400));
+    return next(new ErrorHander("Category name is required", 400));
   }
 
   const categoryExists = await Category.findOne({ name });
   if (categoryExists) {
-    return next(new ErrorHandler("Category already exists", 400));
+    return next(new ErrorHander("Category already exists", 400));
   }
 
   const category = await Category.create({ name });
@@ -38,7 +38,7 @@ exports.deleteCategory = catchAsyncErrors(async (req, res, next) => {
   const category = await Category.findById(req.params.id);
 
   if (!category) {
-    return next(new ErrorHandler("Category not found", 404));
+    return next(new ErrorHander("Category not found", 404));
   }
 
   await category.deleteOne();

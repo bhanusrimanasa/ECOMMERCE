@@ -1,8 +1,7 @@
 const Product = require("../models/productModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
-const ApiFeatures = require("../utils/apifeatures");
-const cloudinary = require("cloudinary");
+const cloudinary = require("cloudinary").v2;
 
 // Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
@@ -10,14 +9,14 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
 
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
-  } else {
+  } else if (Array.isArray(req.body.images)) {
     images = req.body.images;
   }
 
   const imagesLinks = [];
 
   for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
+    const result = await cloudinary.uploader.upload(images[i], {
       folder: "products",
     });
 
@@ -38,48 +37,45 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get All Product
+// Get All Products
 exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   const resultPerPage = 8;
   const productsCount = await Product.countDocuments();
 
-  // Clean up bracket parameters (like price[gte]) into clean MongoDB selectors
+  // Clean bracket parameters (e.g. price[gte]) into MongoDB operator selectors
   const queryObj = {};
-  
+
   Object.keys(req.query).forEach((key) => {
     if (key.includes("[")) {
-      const mainKey = key.split("[")[0]; // "price"
-      const operator = key.split("[")[1].replace("]", ""); // "gte"
-      
+      const mainKey = key.split("[")[0];
+      const operator = key.split("[")[1].replace("]", "");
+
       if (!queryObj[mainKey]) queryObj[mainKey] = {};
       queryObj[mainKey][`$${operator}`] = Number(req.query[key]);
-    } else if (req.query[key] !== "" && key !== "keyword" && key !== "page") {
-      // Handle normal keys like category, ratings
+    } else if (
+      req.query[key] !== "" &&
+      key !== "keyword" &&
+      key !== "page"
+    ) {
       queryObj[key] = req.query[key];
     }
   });
 
-  // 🌟 FIX: Pull the keyword safely from either our query object or directly from req.query
   const keyword = req.query.keyword || "";
   const page = req.query.page || 1;
 
-  // Build the search query dynamically with explicit case-insensitive regex matching
   let searchFilter = {};
   if (keyword) {
     searchFilter.name = {
-      $regex: keyword, // Match partial words/phrases securely
-      $options: "i",   // Case-insensitive matching
+      $regex: keyword,$options: "i",
     };
   }
 
-  // Combine search and structural filters (price range, ratings, etc.)
   const finalFilter = { ...searchFilter, ...queryObj };
 
-  // Get total count matching these filters before pagination
   const filteredProducts = await Product.find(finalFilter);
   const filteredProductsCount = filteredProducts.length;
 
-  // Apply Pagination safely
   const currentPage = Number(page) || 1;
   const skip = resultPerPage * (currentPage - 1);
 
@@ -96,7 +92,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get All Product (Admin)
+// Get All Products (Admin)
 exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
@@ -132,19 +128,19 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
   if (typeof req.body.images === "string") {
     images.push(req.body.images);
-  } else {
+  } else if (Array.isArray(req.body.images)) {
     images = req.body.images;
   }
 
-  if (images !== undefined) {
+  if (images.length > 0) {
     for (let i = 0; i < product.images.length; i++) {
-      await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+      await cloudinary.uploader.destroy(product.images[i].public_id);
     }
 
     const imagesLinks = [];
 
     for (let i = 0; i < images.length; i++) {
-      const result = await cloudinary.v2.uploader.upload(images[i], {
+      const result = await cloudinary.uploader.upload(images[i], {
         folder: "products",
       });
 
@@ -168,7 +164,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Delete Product
+// Delete Product -- Admin
 exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
@@ -177,7 +173,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   }
 
   for (let i = 0; i < product.images.length; i++) {
-    await cloudinary.v2.uploader.destroy(product.images[i].public_id);
+    await cloudinary.uploader.destroy(product.images[i].public_id);
   }
 
   await Product.deleteOne({ _id: req.params.id });
@@ -188,7 +184,7 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Create New Review or Update the review
+// Create New Review or Update Review
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
 
@@ -201,14 +197,20 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
   const product = await Product.findById(productId);
 
+  if (!product) {
+    return next(new ErrorHander("Product not found", 404));
+  }
+
   const isReviewed = product.reviews.find(
     (rev) => rev.user.toString() === req.user._id.toString()
   );
 
   if (isReviewed) {
     product.reviews.forEach((rev) => {
-      if (rev.user.toString() === req.user._id.toString())
-        (rev.rating = rating), (rev.comment = comment);
+      if (rev.user.toString() === req.user._id.toString()) {
+        rev.rating = rating;
+        rev.comment = comment;
+      }
     });
   } else {
     product.reviews.push(review);
@@ -216,12 +218,11 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   }
 
   let avg = 0;
-
   product.reviews.forEach((rev) => {
     avg += rev.rating;
   });
 
-  product.ratings = avg / product.reviews.length;
+  product.ratings = product.reviews.length > 0 ? avg / product.reviews.length : 0;
 
   await product.save({ validateBeforeSave: false });
 
@@ -230,7 +231,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get All Reviews of a product
+// Get All Reviews of a Product
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.id);
 
@@ -257,19 +258,11 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   );
 
   let avg = 0;
-
   reviews.forEach((rev) => {
     avg += rev.rating;
   });
 
-  let ratings = 0;
-
-  if (reviews.length === 0) {
-    ratings = 0;
-  } else {
-    ratings = avg / reviews.length;
-  }
-
+  const ratings = reviews.length === 0 ? 0 : avg / reviews.length;
   const numOfReviews = reviews.length;
 
   await Product.findByIdAndUpdate(
@@ -290,7 +283,7 @@ exports.deleteReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Get Product Suggestions for Autocomplete (Google Search Style)
+// Get Product Suggestions for Autocomplete
 exports.getProductSuggestions = catchAsyncErrors(async (req, res, next) => {
   const { query } = req.query;
 
@@ -299,10 +292,10 @@ exports.getProductSuggestions = catchAsyncErrors(async (req, res, next) => {
   }
 
   const products = await Product.find({
-    name: { $regex: query, $options: "i" }
+    name: { $regex: query,$options: "i" },
   })
-  .select("name -_id") 
-  .limit(6);           
+    .select("name -_id")
+    .limit(6);
 
   const suggestions = products.map((p) => p.name);
 

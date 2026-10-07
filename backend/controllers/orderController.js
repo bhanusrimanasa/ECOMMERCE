@@ -186,17 +186,16 @@ exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// Request Order Return -- User
-// Request Order Return - CUSTOMER
+// Request Order Return -- Customer
 exports.requestReturnOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
 
   if (!order) {
-    return next(new ErrorHandler("Order not found with this Id", 404));
+    return next(new ErrorHander("Order not found with this Id", 404));
   }
 
   if (order.orderStatus !== "Delivered") {
-    return next(new ErrorHandler("You can only return delivered orders", 400));
+    return next(new ErrorHander("You can only return delivered orders", 400));
   }
 
   order.returnStatus = "Requested";
@@ -209,6 +208,7 @@ exports.requestReturnOrder = catchAsyncErrors(async (req, res, next) => {
     message: "Return request submitted successfully",
   });
 });
+
 // Process Return & Restock Inventory -- Admin
 exports.updateReturnStatus = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);
@@ -218,7 +218,9 @@ exports.updateReturnStatus = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (order.returnStatus === "Returned") {
-    return next(new ErrorHander("This order has already been returned and refunded", 400));
+    return next(
+      new ErrorHander("This order has already been returned and refunded", 400)
+    );
   }
 
   const { status, adminNotes } = req.body;

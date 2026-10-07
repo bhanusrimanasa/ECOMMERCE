@@ -162,7 +162,7 @@ exports.updateUserCart = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.user.id,
     { cartItems },
-    { new: true, runValidators: true, useFindAndModify: false }
+    { new: true, runValidators: true }
   );
 
   res.status(200).json({
@@ -178,7 +178,7 @@ exports.saveShippingInfo = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findByIdAndUpdate(
     req.user.id,
     { shippingInfo },
-    { new: true, runValidators: true, useFindAndModify: false }
+    { new: true, runValidators: true }
   );
 
   res.status(200).json({
@@ -237,7 +237,6 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
   await User.findByIdAndUpdate(req.user.id, newUserData, {
     new: true,
     runValidators: true,
-    useFindAndModify: false,
   });
 
   res.status(200).json({
@@ -282,7 +281,6 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
   await User.findByIdAndUpdate(req.params.id, newUserData, {
     new: true,
     runValidators: true,
-    useFindAndModify: false,
   });
 
   res.status(200).json({
